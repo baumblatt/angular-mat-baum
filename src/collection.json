@@ -1,6 +1,11 @@
 {
 	"$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
 	"schematics": {
+		"ng-add": {
+			"description": "Add The Baum Project and create a application in Baumblatt's opinionated way.",
+			"factory": "./application/add#factory",
+			"schema": "./application/schema.json"
+		},
 		"app": {
 			"description": "A application schematic in Baumblatt's opinionated way.",
 			"factory": "./application/app#factory",
