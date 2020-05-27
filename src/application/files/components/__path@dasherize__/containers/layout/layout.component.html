@@ -1,0 +1,32 @@
+<div class="layout-container mat-app-background" fxLayout="column">
+    <mat-toolbar color="primary" fxFlex="0 0 64px" fxFlex.xs="0 0 56px">
+        <button (click)="toggle()" mat-icon-button fxHide.gt-sm="true">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <ng-container><%= name %></ng-container>
+    </mat-toolbar>
+    <mat-sidenav-container [class.dark]="theme$ | async">
+        <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+                     [opened]="opened || !mobileQuery.matches" (closedStart)="close()">
+            <mat-nav-list>
+                <mat-list-item (click)="closeAndGo('/core/layout/home');" routerLinkActive="active">
+                    <mat-icon matListIcon>home</mat-icon>
+                    <span>Home</span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item routerLinkActive="active">
+                    <mat-icon matListIcon>close</mat-icon>
+                    <span>Logout</span>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content fxLayout="row" fxLayoutAlign="start stretch">
+            <div class="layout-content" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="1 1 100%">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+    <mat-toolbar color="primary" fxFlex="0 0 64px" fxFlex.xs="0 0 56px">
+    </mat-toolbar>
+</div>
+

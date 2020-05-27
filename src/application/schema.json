@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "app",
+  "title": "An alternative application schematic",
+  "type": "object",
+  "description": "Initialise a new application in Baumblatt's opinionated way.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the your application",
+      "x-prompt": "Please, tell me your application name:",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "prefix": {
+      "type": "string",
+      "format": "html-selector",
+      "description": "A prefix to apply to generated selectors.",
+      "default": "app",
+      "alias": "p"
+    },
+    "skipTests": {
+      "description": "When true, does not create \"spec.ts\" test files for the app.",
+      "type": "boolean",
+      "default": false,
+      "alias": "S",
+      "x-user-analytics": 12
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

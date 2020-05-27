@@ -1,0 +1,16 @@
+{
+	"$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+	"schematics": {
+		"app": {
+			"description": "A application schematic in Baumblatt's opinionated way.",
+			"factory": "./application/app#factory",
+			"schema": "./application/schema.json"
+		},
+		"app-after": {
+			"description": "Continue the application scaffold after dependencies installs.",
+			"factory": "./application/app-after#factory",
+			"schema": "./application/schema.json",
+			"private": true
+		}
+	}
+}

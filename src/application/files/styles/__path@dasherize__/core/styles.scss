@@ -1,0 +1,7 @@
+@import "containers/home/home.component.theme";
+@import "containers/layout/layout.component.theme";
+
+@mixin core-theme($theme) {
+    @include app-home-component-theme($theme);
+    @include app-layout-component-theme($theme);
+}

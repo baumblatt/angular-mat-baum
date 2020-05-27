@@ -1,0 +1,36 @@
+{
+  "name": "angular-mat-baum",
+  "version": "0.0.1",
+  "description": "A strongly opinionated Angular Application Schematic using NgRx, Angular Flex Layout and Angular Material.",
+  "scripts": {
+    "schema": "npx -p dtsgenerator dtsgen src/application/schema.json -o src/application/schema.d.ts",
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "schematics",
+    "material",
+    "ngrx"
+  ],
+  "author": "Bernardo Baumblatt",
+  "license": "MIT",
+  "schematics": "./src/collection.json",
+  "dependencies": {
+    "@angular-devkit/core": "^9.1.7",
+    "@angular-devkit/schematics": "^9.1.7",
+    "@schematics/angular": "^9.1.7",
+    "typescript": "~3.8.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/schematics-cli": "^0.901.7",
+    "@types/jasmine": "~3.5.0",
+    "@types/node": "^12.11.1",
+    "jasmine": "^3.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baumblatt/angular-mat-baum.git"
+  },
+  "bugs": {
+    "url": "https://github.com/baumblatt/angular-mat-baum.git/issues"
+  }
+}
