@@ -31,7 +31,6 @@ export function factory(_options: App): Rule {
 				path: `projects/${name}/src/app`,
 			}),
 			() => {
-				console.log('defining routes');
 				return mergeWith(apply(url('./files/routers'), [template({
 					..._options,
 					...strings,
