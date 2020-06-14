@@ -3,7 +3,10 @@
         <button (click)="toggle()" mat-icon-button fxHide.gt-sm="true">
             <mat-icon>menu</mat-icon>
         </button>
-        <ng-container><%= name %></ng-container>
+        <span><%= name %></span>
+        <div fxLayout="row" fxLayoutAlign="end stretch" fxFlex="1 1 auto">
+            <button mat-icon-button (click)="theme()"><mat-icon>brightness_6</mat-icon></button>
+        </div>
     </mat-toolbar>
     <mat-sidenav-container [class.dark]="theme$ | async">
         <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"

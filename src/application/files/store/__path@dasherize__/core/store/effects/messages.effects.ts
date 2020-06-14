@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {onInfo, onAlert, onWarn} from '../actions/msg.actions';
+import {onInfo, onAlert, onWarn} from '../actions/messages.actions';
 import {tap} from 'rxjs/operators';
 
 @Injectable()
-export class MsgEffects {
+export class MessagesEffects {
 
     onInfo$ = createEffect(() => this.actions$.pipe(
         ofType(onInfo),

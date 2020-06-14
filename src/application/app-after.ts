@@ -165,7 +165,7 @@ export function factory(_options: App): Rule {
 				const changes = addImportToModule(
 					source,
 					`projects/${name}/src/app/core/core.module.ts`,
-					`EffectsModule.forFeature([MsgEffects])`,
+					`EffectsModule.forFeature([MessagesEffects])`,
 					'@ngrx/effects'
 				);
 
@@ -179,8 +179,8 @@ export function factory(_options: App): Rule {
 				changes.push(insertImport(
 					source,
 					`projects/${name}/src/app/core/core.module.ts`,
-					'MsgEffects',
-					'./store/effects/msg.effects'
+					'MessagesEffects',
+					'./store/effects/messages.effects'
 				));
 
 				changes.push(insertImport(

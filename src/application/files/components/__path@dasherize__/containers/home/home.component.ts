@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { onInfo } from "../../store/actions/msg.actions"
+import { onInfo } from "../../store/actions/messages.actions"
 import { CoreState } from "../../store/reducers/feature.reducer";
 import { Store } from "@ngrx/store";
 

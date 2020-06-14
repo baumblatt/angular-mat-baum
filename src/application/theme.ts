@@ -1,4 +1,5 @@
-return `
+export function createCustomTheme (name = 'app') {
+  return `
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
@@ -14,15 +15,17 @@ return `
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$${name}-primary: mat-palette($mat-indigo);
-$${name}-accent: mat-palette($mat-pink, A200, A100, A400);
+$${name}-light-primary: mat-palette($mat-deep-purple);
+$${name}-light-accent: mat-palette($mat-amber, A200, A100, A400);
+$${name}-dark-primary: mat-palette($mat-pink, 700, 500, 900);
+$${name}-dark-accent: mat-palette($mat-blue-grey, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $${name}-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$${name}-light-theme: mat-light-theme($${name}-primary, $${name}-accent, $${name}-warn);
-$${name}-dark-theme: mat-dark-theme($${name}-primary, $${name}-accent, $${name}-warn);
+$${name}-light-theme: mat-light-theme($${name}-light-primary, $${name}-light-accent, $${name}-warn);
+$${name}-dark-theme: mat-dark-theme($${name}-dark-primary, $${name}-dark-accent, $${name}-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -43,5 +46,4 @@ body.app-dark-theme {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }  
   `;
-export function createCustomTheme (name = 'app') {
 }
