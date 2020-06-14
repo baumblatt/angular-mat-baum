@@ -5,6 +5,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { CoreState } from "../../store/reducers/feature.reducer";
+import { Store } from "@ngrx/store";
+
 
 @Component({
     selector: '<%= prefix %>-layout',
@@ -41,7 +44,7 @@ export class LayoutComponent implements OnInit {
     private readonly mobileQueryListener: () => void;
 
     constructor(changeDetectorRef: ChangeDetectorRef, @Inject(DOCUMENT) private document: Document,
-                media: MediaMatcher, private router: Router) {
+                media: MediaMatcher, private router: Router, private store: Store<CoreState>) {
 
         this.mobileQuery = media.matchMedia('(max-width: 959px)');
         this.mobileQueryListener = () => changeDetectorRef.detectChanges();

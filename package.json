@@ -4,7 +4,8 @@
   "description": "A strongly opinionated Angular Application Schematic using NgRx, Angular Flex Layout and Angular Material.",
   "scripts": {
     "schema": "npx -p dtsgenerator dtsgen src/application/schema.json -o src/application/schema.d.ts",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "pack": "npm pack"
   },
   "keywords": [
     "schematics",

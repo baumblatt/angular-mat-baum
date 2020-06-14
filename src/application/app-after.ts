@@ -97,9 +97,16 @@ export function factory(_options: App): Rule {
 				const changes = addImportToModule(
 					source,
 					`projects/${name}/src/app/app.module.ts`,
+					`EffectsModule.forRoot([])`,
+					'@ngrx/effects'
+				);
+
+				changes.push(...addImportToModule(
+					source,
+					`projects/${name}/src/app/app.module.ts`,
 					`StoreModule.forRoot(reducers, { metaReducers, runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true }})`,
 					'@ngrx/store'
-				);
+				));
 
 				changes.push(...addImportToModule(
 					source,
@@ -137,6 +144,53 @@ export function factory(_options: App): Rule {
 				));
 
 				const recorder = tree.beginUpdate(`projects/${name}/src/app/app.module.ts`);
+
+				for (const change of changes) {
+					if (change instanceof InsertChange) {
+						recorder.insertLeft(change.pos, change.toAdd);
+					}
+				}
+				tree.commitUpdate(recorder);
+
+				return tree;
+			},
+			(tree) => {
+				const source = ts.createSourceFile(
+					`projects/${name}/src/app/core/core.module.ts`,
+					// @ts-ignore
+					tree.read(`projects/${name}/src/app/core/core.module.ts`).toString(),
+					ts.ScriptTarget.Latest, true
+				);
+
+				const changes = addImportToModule(
+					source,
+					`projects/${name}/src/app/core/core.module.ts`,
+					`EffectsModule.forFeature([MsgEffects])`,
+					'@ngrx/effects'
+				);
+
+				changes.push(...addImportToModule(
+					source,
+					`projects/${name}/src/app/core/core.module.ts`,
+					`StoreModule.forFeature('core', coreReducers)`,
+					'@ngrx/store'
+				));
+
+				changes.push(insertImport(
+					source,
+					`projects/${name}/src/app/core/core.module.ts`,
+					'MsgEffects',
+					'./store/effects/msg.effects'
+				));
+
+				changes.push(insertImport(
+					source,
+					`projects/${name}/src/app/core/core.module.ts`,
+					'coreReducers',
+					'./store/reducers/feature.reducer'
+				));
+
+				const recorder = tree.beginUpdate(`projects/${name}/src/app/core/core.module.ts`);
 
 				for (const change of changes) {
 					if (change instanceof InsertChange) {
