@@ -1,9 +1,9 @@
-export function createCustomTheme (name = 'app') {
-  return `
+return `
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.
+@import 'app/material/styles';
 @import 'app/core/styles';
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -29,10 +29,12 @@ $${name}-dark-theme: mat-dark-theme($${name}-primary, $${name}-accent, $${name}-
 // that you are using.
 body.app-light-theme {
   @include angular-material-theme($${name}-light-theme);
+  @include material-ext-theme($${name}-light-theme);
   @include core-theme($${name}-light-theme);
 }
 body.app-dark-theme {
   @include angular-material-theme($${name}-dark-theme);
+  @include material-ext-theme($${name}-dark-theme);
   @include core-theme($${name}-dark-theme);
 }
 
@@ -41,4 +43,5 @@ body.app-dark-theme {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }  
   `;
+export function createCustomTheme (name = 'app') {
 }

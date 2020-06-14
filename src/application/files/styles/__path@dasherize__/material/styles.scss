@@ -1,0 +1,114 @@
+// Import all the tools needed to customize the theme and extract parts of it
+@import '~@angular/material/theming';
+
+@mixin material-ext-theme($theme) {
+	$primary: map-get($theme, primary);
+	$background: map-get($theme, background);
+	$accent: map-get($theme, accent);
+	$warn: map-get($theme, warn);
+
+	$info: mat-palette($mat-green, 700, 0.8);
+
+	//*************************
+	// Chip
+	//*************************
+	mat-chip {
+		&.mat-chip.mat-standard-chip.mat-chip-selected {
+			&.mat-info {
+				@include mat-chips-theme-color($info);
+			}
+		}
+	}
+
+
+	//*************************
+	// Cards
+	//*************************
+	mat-card {
+		mat-card-header {
+			div.mat-card-header-text {
+				width: 100%;
+			}
+		}
+	}
+
+	//*************************
+	// Icons
+	//*************************
+	mat-icon.mat-icon-info {
+		color: mat-color($mat-green, 700, 0.8);
+	}
+
+	mat-icon.mat-icon-warn {
+		color: mat-color($warn, 500);
+	}
+
+	//*************************
+	// Snack Bar
+	//*************************
+	.mat-snack-bar-container {
+		&.mat-snack-bar-primary {
+			background-color: mat-color($primary, 600);
+			color: mat-contrast($primary, 600);
+		}
+
+		&.mat-snack-bar-accent {
+			background-color: mat-color($accent, 600);
+			color: mat-contrast($accent, 600);
+		}
+
+		&.mat-snack-bar-warn {
+			background-color: mat-color($warn, 600);
+			color: mat-contrast($warn, 600);
+		}
+	}
+
+	//*************************
+	// Table
+	//*************************
+	mat-table {
+		@if map-get($theme, is-dark) {
+			.mat-row:nth-child(even){
+				background-color: darken(mat-color($background, 'card'), 1%);
+			}
+
+			.mat-row:nth-child(odd){
+				background-color: lighten(mat-color($background, 'card'), 1%);
+			}
+		} @else {
+			.mat-row:nth-child(even){
+				background-color: darken(mat-color($background, 'card'), 2%);
+			}
+
+			.mat-row:nth-child(odd){
+				background-color: mat-color($background, 'card');
+			}
+		}
+
+		.mat-row.mat-row-warn {
+			background-color: mat-color($warn, 700, 0.1);
+		}
+	}
+
+	//*************************
+	// Tabs
+	//*************************
+	.mat-tab-body-wrapper{
+		flex-grow: 1;
+	}
+
+	//*************************
+	// Form Field
+	//*************************
+	mat-form-field {
+		&.right {
+			input {
+				text-align: right;
+			}
+		}
+	}
+
+
+}
+
+
