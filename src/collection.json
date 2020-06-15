@@ -7,7 +7,7 @@
 			"schema": "./application/schema.json"
 		},
 		"app": {
-			"description": "A application schematic in Baumblatt's opinionated way.",
+			"description": "An application schematic in Baumblatt's opinionated way.",
 			"factory": "./application/app#factory",
 			"schema": "./application/schema.json"
 		},
@@ -16,6 +16,16 @@
 			"factory": "./application/app-after#factory",
 			"schema": "./application/schema.json",
 			"private": true
+		},
+		"module": {
+			"description": "A feature module schematic in Baumblatt's opinionated way.",
+			"factory": "./module/module#factory",
+			"schema": "./module/schema.json"
+		},
+		"slice": {
+			"description": "A schematic to create a new slice in the store feature.",
+			"factory": "./slice/slice#factory",
+			"schema": "./slice/schema.json"
 		}
 	}
 }

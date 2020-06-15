@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "slice",
+  "title": "A schematic to create a new slice in the store feature.",
+  "type": "object",
+  "description": "Creates a new Store slice in Baumblatt's opinionated way.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the slice of the store feature.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the slice feature store?"
+    },
+    "feature": {
+      "type": "string",
+      "description": "The name of the store feature."
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path at which to create the NgModule, relative to the workspace root.",
+      "visible": false
+    }
+  }
+}
