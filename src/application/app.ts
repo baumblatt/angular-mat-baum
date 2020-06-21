@@ -50,7 +50,7 @@ export function factory(_options: App): Rule {
 				tree.overwrite(`projects/${name}/src/app/app.component.html`, '<router-outlet></router-outlet>')
 
 				const installTaskId = context.addTask(new NodePackageInstallTask({
-					packageName: '@angular/cdk @angular/material @angular/flex-layout @ngrx/store @ngrx/effects @ngrx/router-store @ngrx/store-devtools'
+					packageName: '@angular/cdk @angular/material @angular/flex-layout@9.0.0-beta.31 @ngrx/store @ngrx/effects @ngrx/router-store @ngrx/store-devtools'
 				}));
 				context.addTask(new RunSchematicTask('app-after', _options), [installTaskId]);
 			}
