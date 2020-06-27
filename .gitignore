@@ -16,3 +16,6 @@ npm-debug.log*
 
 # npm pack file
 angular-mat-baum-*.tgz
+
+# playground
+src/playground.ts
