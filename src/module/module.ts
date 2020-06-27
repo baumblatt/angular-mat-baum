@@ -25,8 +25,6 @@ export function factory(_options: Module): Rule {
       _options.path = await createDefaultPath(_tree, _options.project as string);
     }
 
-    console.log(_options);
-
     return chain([
 
       externalSchematic('@schematics/angular', 'module', {
