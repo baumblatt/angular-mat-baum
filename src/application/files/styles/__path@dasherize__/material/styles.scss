@@ -7,20 +7,6 @@
 	$accent: map-get($theme, accent);
 	$warn: map-get($theme, warn);
 
-	$info: mat-palette($mat-green, 700, 0.8);
-
-	//*************************
-	// Chip
-	//*************************
-	mat-chip {
-		&.mat-chip.mat-standard-chip.mat-chip-selected {
-			&.mat-info {
-				@include mat-chips-theme-color($info);
-			}
-		}
-	}
-
-
 	//*************************
 	// Cards
 	//*************************
