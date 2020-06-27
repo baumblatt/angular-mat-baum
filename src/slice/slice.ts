@@ -109,8 +109,9 @@ export function factory(_options: Slice): Rule {
     }
 
     const modulePath = findModuleFromOptions(_tree, _options) as Path;
-    const feature = 'fruits';
-
+    const moduleFile = modulePath.split('/').pop() || '';
+    const feature = moduleFile.split('.').reverse().pop() || '';
+    
     const name = strings.dasherize(_options.name);
 
     return chain([
