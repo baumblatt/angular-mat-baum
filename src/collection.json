@@ -2,12 +2,12 @@
 	"$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
 	"schematics": {
 		"ng-add": {
-			"description": "Add The Baum Project and create a application in Baumblatt's opinionated way.",
+			"description": "Add The Baum Project and create an Angular application in Baumblatt's opinionated way.",
 			"factory": "./application/add#factory",
 			"schema": "./application/schema.json"
 		},
 		"app": {
-			"description": "An application schematic in Baumblatt's opinionated way.",
+			"description": "Create an Angular application in Baumblatt's opinionated way.",
 			"factory": "./application/app#factory",
 			"schema": "./application/schema.json"
 		},
@@ -18,12 +18,12 @@
 			"private": true
 		},
 		"module": {
-			"description": "A feature module schematic in Baumblatt's opinionated way.",
+			"description": "Create a feature Angular module in Baumblatt's opinionated way.",
 			"factory": "./module/module#factory",
 			"schema": "./module/schema.json"
 		},
 		"slice": {
-			"description": "A schematic to create a new slice in the store feature.",
+			"description": "Create a new slice in a feature store.",
 			"factory": "./slice/slice#factory",
 			"schema": "./slice/schema.json"
 		}
