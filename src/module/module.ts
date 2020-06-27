@@ -10,11 +10,13 @@ import {
   Tree,
   url
 } from "@angular-devkit/schematics";
-import {addImportToModule, InsertChange, insertImport} from "@ngrx/schematics/schematics-core";
+import {addImportToModule, InsertChange, insertImport, ReplaceChange} from "@ngrx/schematics/schematics-core";
 import {strings} from "@angular-devkit/core";
 import {RunSchematicTask} from "@angular-devkit/schematics/tasks";
 import * as ts from "typescript";
 import {createDefaultPath} from "@schematics/angular/utility/workspace";
+import {Change} from "@schematics/angular/utility/change";
+import {findNodes, getRouterModuleDeclaration} from "@schematics/angular/utility/ast-utils";
 
 export function factory(_options: Module): Rule {
   return async (_tree: Tree, _context: SchematicContext) => {
@@ -27,14 +29,76 @@ export function factory(_options: Module): Rule {
 
     return chain([
 
+      // create the module using original Angular Schematics
       externalSchematic('@schematics/angular', 'module', {
-        route: name,
         ..._options,
+        route: undefined,
+        module: undefined,
         name: name,
         routing: true,
         routingScope: 'Child',
         flat: false,
       }),
+      // add route declaration to core routing module
+      (tree) => {
+        // todo: maybe a different module than Core.
+        const routingModule = `${_options.path}/core/core-routing.module.ts`;
+
+        const source = ts.createSourceFile(
+          routingModule,
+          // @ts-ignore
+          tree.read(routingModule).toString(),
+          ts.ScriptTarget.Latest, true
+        );
+
+        const changes: Change[] = [addRouteDeclarationToModule(source, routingModule, name)];
+
+        const recorder = tree.beginUpdate(routingModule);
+
+        for (const change of changes) {
+          if (change instanceof InsertChange) {
+            recorder.insertLeft(change.pos, change.toAdd);
+          }
+        }
+
+        tree.commitUpdate(recorder);
+
+        return tree;
+      },
+      // add the menu item on sidebar navigation of layout html
+      (tree) => {
+        // todo: maybe a different module than Core.
+        const layoutPath = `${_options.path}/core/containers/layout/layout.component.html`;
+        const source: Buffer = tree.read(layoutPath) as Buffer;
+
+        const matDivider = '<mat-divider></mat-divider>';
+
+        const position = source.toString().lastIndexOf(matDivider);
+        const contentToInsert = `<mat-divider></mat-divider>
+                <mat-list-item (click)="closeAndGo('/core/layout/${name}');" routerLinkActive="active">
+                    <mat-icon matListIcon>link</mat-icon>
+                    <span>${strings.classify(name)}</span>
+                </mat-list-item>
+                <mat-divider></mat-divider>`;
+
+        const changes: Change[] = [new ReplaceChange(layoutPath, position, matDivider, contentToInsert)]
+
+        const recorder = tree.beginUpdate(layoutPath);
+
+        for (const change of changes) {
+          if (change instanceof InsertChange) {
+            recorder.insertLeft(change.pos, change.toAdd);
+          } else if (change instanceof ReplaceChange) {
+            recorder.remove(change.pos, change.oldText.length);
+            recorder.insertLeft(change.pos, change.newText);
+          }
+        }
+
+        tree.commitUpdate(recorder);
+
+        return tree;
+      },
+      // create the feature store files from templates
       () => {
         return mergeWith(apply(url('./files/store'), [template({
           ..._options,
@@ -42,6 +106,7 @@ export function factory(_options: Module): Rule {
           path: `${_options.path}/${name}`
         })]), MergeStrategy.AllowCreationConflict);
       },
+      // import store and effects modules from NgRx
       (tree) => {
         const source = ts.createSourceFile(
           `${_options.path}/${name}/${name}.module.ts`,
@@ -84,6 +149,7 @@ export function factory(_options: Module): Rule {
         return tree;
 
       },
+      // create the store slice (if needed)
       () => {
         if (!!_options.slice) {
           _context.addTask(new RunSchematicTask('slice', {
@@ -94,4 +160,118 @@ export function factory(_options: Module): Rule {
       }
     ]);
   }
+}
+
+/**
+ * Adds a new route declaration to a router module (i.e. has a RouterModule declaration)
+ */
+export function addRouteDeclarationToModule(
+  source: ts.SourceFile,
+  fileToAdd: string,
+  name: string,
+): Change {
+  const loadChildren = `() => import('../${name}/${name}.module').then(m => m.${strings.classify(name)}Module)`;
+  const routeLiteral = `{path: '${name}', loadChildren: ${loadChildren}}`
+
+  const routerModuleExpr = getRouterModuleDeclaration(source);
+  if (!routerModuleExpr) {
+    throw new Error(`Couldn't find a route declaration in ${fileToAdd}.`);
+  }
+  const scopeConfigMethodArgs = (routerModuleExpr as ts.CallExpression).arguments;
+  if (!scopeConfigMethodArgs.length) {
+    const { line } = source.getLineAndCharacterOfPosition(routerModuleExpr.getStart());
+    throw new Error(
+      `The router module method doesn't have arguments ` +
+      `at line ${line} in ${fileToAdd}`,
+    );
+  }
+
+  let routesArr: ts.ArrayLiteralExpression | undefined;
+  const routesArg = scopeConfigMethodArgs[0];
+
+  // Check if the route declarations array is
+  // an in lined argument of RouterModule or a standalone variable
+  if (ts.isArrayLiteralExpression(routesArg)) {
+    routesArr = routesArg;
+  } else {
+    const routesVarName = routesArg.getText();
+    let routesVar;
+    if (routesArg.kind === ts.SyntaxKind.Identifier) {
+      routesVar = source.statements
+        .filter(ts.isVariableStatement)
+        .find((v) => {
+          return v.declarationList.declarations[0].name.getText() === routesVarName;
+        });
+    }
+
+    if (!routesVar) {
+      const { line } = source.getLineAndCharacterOfPosition(routesArg.getStart());
+      throw new Error(
+        `No route declaration array was found that corresponds ` +
+        `to router module at line ${line} in ${fileToAdd}`,
+      );
+    }
+
+    routesArr = findNodes(routesVar, ts.SyntaxKind.ArrayLiteralExpression, 1)[0] as ts.ArrayLiteralExpression;
+  }
+
+  const occurrencesCount = routesArr.elements.length;
+
+  let route: string = routeLiteral;
+  let insertPos = routesArr.elements.pos;
+
+  if (occurrencesCount > 0) {
+
+    const layoutRouteLiteral = routesArr.elements.find(element => {
+      return ts.isObjectLiteralExpression(element) && element
+        .properties.some(n => (
+          ts.isPropertyAssignment(n)
+          && ts.isIdentifier(n.name)
+          && n.name.text === 'path'
+          && ts.isStringLiteral(n.initializer)
+          && n.initializer.text === 'layout'
+        ));
+    }) as ts.ObjectLiteralExpression;
+
+    if (layoutRouteLiteral) {
+      const layoutChildrenRouteLiteral = layoutRouteLiteral.properties
+        .find(property => ts.isPropertyAssignment(property)
+          && ts.isIdentifier(property.name)
+          && property.name.text === 'children'
+          && ts.isArrayLiteralExpression(property.initializer)
+        ) as ts.PropertyAssignment;
+
+      if (layoutChildrenRouteLiteral) {
+        routesArr = layoutChildrenRouteLiteral.initializer as ts.ArrayLiteralExpression;
+      }
+    }
+
+    const lastRouteLiteral = [...routesArr.elements].pop() as ts.Expression;
+    const lastRouteIsWildcard = ts.isObjectLiteralExpression(lastRouteLiteral)
+      && lastRouteLiteral
+        .properties
+        .some(n => (
+          ts.isPropertyAssignment(n)
+          && ts.isIdentifier(n.name)
+          && n.name.text === 'path'
+          && ts.isStringLiteral(n.initializer)
+          && n.initializer.text === '**'
+        ));
+
+    const text = routesArr.getFullText(source);
+    const indentation = text.match(/\r?\n(\r?)\s*/) || [];
+    const routeText = `${indentation[0] || ' '}${routeLiteral}`;
+
+    // Add the new route before the wildcard route
+    // otherwise we'll always redirect to the wildcard route
+    if (lastRouteIsWildcard) {
+      insertPos = lastRouteLiteral.pos;
+      route = `${routeText},`;
+    } else {
+      insertPos = lastRouteLiteral.end;
+      route = `,${routeText}`;
+    }
+  }
+
+  return new InsertChange(fileToAdd, insertPos, route);
 }
