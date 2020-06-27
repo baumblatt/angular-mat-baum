@@ -1,7 +1,6 @@
 import {ActionReducerMap, createFeatureSelector} from '@ngrx/store';
 
 export interface <%= classify(name) %>State {
-
 }
 
 export const <%= camelize(name) %>Reducers: ActionReducerMap<<%= classify(name) %>State> = {};
