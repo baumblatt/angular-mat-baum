@@ -1,31 +1,41 @@
 import {
   apply,
   chain,
-  externalSchematic, MergeStrategy,
+  externalSchematic,
+  MergeStrategy,
   mergeWith,
   Rule,
-  SchematicContext, template,
+  SchematicContext,
+  template,
   Tree,
   url
 } from "@angular-devkit/schematics";
-import {addImportToModule, getProjectPath, InsertChange, insertImport} from "@ngrx/schematics/schematics-core";
+import {addImportToModule, InsertChange, insertImport} from "@ngrx/schematics/schematics-core";
 import {strings} from "@angular-devkit/core";
 import {RunSchematicTask} from "@angular-devkit/schematics/tasks";
 import * as ts from "typescript";
+import {createDefaultPath} from "@schematics/angular/utility/workspace";
 
 export function factory(_options: Module): Rule {
   return async (_tree: Tree, _context: SchematicContext) => {
 
     const name = strings.dasherize(_options.name);
 
-    _options.path = getProjectPath(_tree, _options);
+    if (_options.path === undefined) {
+      _options.path = await createDefaultPath(_tree, _options.project as string);
+    }
+
+    console.log(_options);
 
     return chain([
 
       externalSchematic('@schematics/angular', 'module', {
+        route: name,
         ..._options,
         name: name,
-        routing: true
+        routing: true,
+        routingScope: 'Child',
+        flat: false,
       }),
       () => {
         return mergeWith(apply(url('./files/store'), [template({
@@ -48,6 +58,13 @@ export function factory(_options: Module): Rule {
           `StoreModule.forFeature('${name}', ${strings.camelize(name)}Reducers)`,
           '@ngrx/store'
         );
+
+        changes.push(...addImportToModule(
+          source,
+          `${_options.path}/${name}/${name}.module`,
+          `SharedModule`,
+          '../shared/shared.module'
+        ));
 
         changes.push(insertImport(
           source,
@@ -73,8 +90,7 @@ export function factory(_options: Module): Rule {
         if (!!_options.slice) {
           _context.addTask(new RunSchematicTask('slice', {
             name: _options.slice,
-            feature: name,
-            path: `${_options.path}/${strings.dasherize(name)}`,
+            path: `${_options.path}/${name}`,
           }));
         }
       }

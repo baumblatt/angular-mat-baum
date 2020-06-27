@@ -14,9 +14,12 @@
       },
       "x-prompt": "What name would you like to use for the slice feature store?"
     },
-    "feature": {
+    "project": {
       "type": "string",
-      "description": "The name of the store feature."
+      "description": "The name of the project.",
+      "$default": {
+        "$source": "projectName"
+      }
     },
     "path": {
       "type": "string",
@@ -24,5 +27,8 @@
       "description": "The path at which to create the NgModule, relative to the workspace root.",
       "visible": false
     }
-  }
+  },
+  "required": [
+    "name"
+  ]
 }
