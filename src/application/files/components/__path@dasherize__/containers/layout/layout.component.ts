@@ -54,7 +54,7 @@ export class LayoutComponent implements OnInit {
     try {
       this.mobileQuery.addEventListener('change', this.mobileQueryListener);
     } catch (e) {
-      // safari
+      // use deprecated symbol until Safari move forwards.
       this.mobileQuery.addListener(this.mobileQueryListener);
     }
   }
