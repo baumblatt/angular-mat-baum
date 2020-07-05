@@ -13,11 +13,11 @@ import { getPreferencesTheme } from "../../store/selectors/preferences.selectors
 
 @Component({
   selector: '<%= prefix %>-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss'],
+  templateUrl: './layout.container.html',
+  styleUrls: ['./layout.container.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LayoutComponent implements OnInit {
+export class LayoutContainer implements OnInit {
 
   /**
    * Reference to the sidenav component.

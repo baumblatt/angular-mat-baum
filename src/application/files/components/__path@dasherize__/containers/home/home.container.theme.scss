@@ -1,7 +1,7 @@
 // Import library functions for theme creation.
 @import '~@angular/material/theming';
 
-@mixin <%= prefix %>-home-component-theme($theme) {
+@mixin <%= prefix %>-home-container-theme($theme) {
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
   $primary: map-get($theme, primary);

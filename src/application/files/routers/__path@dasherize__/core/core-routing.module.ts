@@ -1,15 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from './containers/home/home.component';
-import {LayoutComponent} from './containers/layout/layout.component';
+import {HomeContainer} from './containers/home/home.container';
+import {LayoutContainer} from './containers/layout/layout.container';
 
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'layout'},
   {
-    path: 'layout', component: LayoutComponent, children: [
+    path: 'layout', component: LayoutContainer, children: [
       {path: '', pathMatch: 'full', redirectTo: 'home'},
-      {path: 'home', component: HomeComponent},
+      {path: 'home', component: HomeContainer},
     ]
   },
 ];

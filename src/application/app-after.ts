@@ -43,6 +43,7 @@ export function factory(_options: App): Rule {
 			}),
 			externalSchematic('@schematics/angular', 'component', {
 				project: name,
+				type: 'container',
 				name: 'containers/layout',
 				path: `projects/${name}/src/app/core`,
 				style: 'scss',
@@ -50,6 +51,7 @@ export function factory(_options: App): Rule {
 			}),
 			externalSchematic('@schematics/angular', 'component', {
 				project: name,
+				type: 'container',
 				name: 'containers/home',
 				path: `projects/${name}/src/app/core`,
 				style: 'scss',

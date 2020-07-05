@@ -6,10 +6,10 @@ import { Store } from "@ngrx/store";
 
 @Component({
   selector: '<%= prefix %>-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './home.container.html',
+  styleUrls: ['./home.container.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeContainer implements OnInit {
 
   constructor(private store: Store<CoreState>) { }
 
