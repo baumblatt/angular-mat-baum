@@ -2,7 +2,7 @@
 
 This is a strongly opinionated Angular Application Schematic using NgRx, Angular Flex Layout and Angular Material.
 
-# Getting Started With The Baum Schematic
+# Getting started with the Baum schematics
 
 Create a new angular project without an Application, install the schematic and generate your `Baum App`.
 
@@ -13,7 +13,7 @@ ng add angular-mat-baum my-baum-app
 ng serve --open=true
 ```
 
-Go further with your `Baum App`
+Go further with your `Baum App`, create a future module, a second slice and two containers.
 
 ```
 cd projects/my-baum-app/src/app
@@ -24,6 +24,8 @@ ng g angular-mat-baum:component containers/juices --type container
 ng g angular-mat-baum:component containers/cadies --type container
 ```
 
+> Please, use the latest Angular CLI version, or review dependencies versions on package.json, is 
+> strongly recommend that your App use the same major version for all @angular/* libraries.
 
 ## The list of Schematics available
 
