@@ -17,6 +17,7 @@ import {
 	addImportToModule, InsertChange, insertImport,
 } from '@ngrx/schematics/schematics-core';
 import * as ts from 'typescript';
+import {getAngularSchematicsDefaults} from "../utils/utils";
 
 export function factory(_options: App): Rule {
 	return (_tree: Tree, _context: SchematicContext) => {
@@ -32,16 +33,19 @@ export function factory(_options: App): Rule {
 			}),
 
 			externalSchematic('@schematics/angular', 'module', {
+				...getAngularSchematicsDefaults(_tree, name)['@schematics/angular:module'],
 				name: 'shared',
 				module: 'core/core.module',
 				path: `projects/${name}/src/app`,
 			}),
 			externalSchematic('@schematics/angular', 'module', {
+				...getAngularSchematicsDefaults(_tree, name)['@schematics/angular:module'],
 				name: 'material',
 				module: 'shared/shared.module',
 				path: `projects/${name}/src/app`,
 			}),
 			externalSchematic('@schematics/angular', 'component', {
+				...getAngularSchematicsDefaults(_tree, name)['@schematics/angular:component'],
 				project: name,
 				type: 'container',
 				name: 'containers/layout',
@@ -50,6 +54,7 @@ export function factory(_options: App): Rule {
 				skipTests: _options.skipTests
 			}),
 			externalSchematic('@schematics/angular', 'component', {
+				...getAngularSchematicsDefaults(_tree, name)['@schematics/angular:component'],
 				project: name,
 				type: 'container',
 				name: 'containers/home',

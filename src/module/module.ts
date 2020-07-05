@@ -17,6 +17,7 @@ import * as ts from "typescript";
 import {createDefaultPath} from "@schematics/angular/utility/workspace";
 import {Change} from "@schematics/angular/utility/change";
 import {findNodes, getRouterModuleDeclaration} from "@schematics/angular/utility/ast-utils";
+import {getAngularSchematicsDefaults} from "../utils/utils";
 
 export function factory(_options: Module): Rule {
   return async (_tree: Tree, _context: SchematicContext) => {
@@ -32,6 +33,7 @@ export function factory(_options: Module): Rule {
       // create the module using original Angular Schematics
       externalSchematic('@schematics/angular', 'module', {
         ..._options,
+        ...getAngularSchematicsDefaults(_tree, _options.project as string)['@schematics/angular:module'],
         route: undefined,
         module: undefined,
         name: name,
