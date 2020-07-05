@@ -70,7 +70,7 @@ export function factory(_options: Module): Rule {
       // add the menu item on sidebar navigation of layout html
       (tree) => {
         // todo: maybe a different module than Core.
-        const layoutPath = `${_options.path}/core/containers/layout/layout.component.html`;
+        const layoutPath = `${_options.path}/core/containers/layout/layout.container.html`;
         const source: Buffer = tree.read(layoutPath) as Buffer;
 
         const matDivider = '<mat-divider></mat-divider>';
