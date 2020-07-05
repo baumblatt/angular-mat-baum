@@ -7,11 +7,23 @@ This is a strongly opinionated Angular Application Schematic using NgRx, Angular
 Create a new angular project without an Application, install the schematic and generate your `Baum App`.
 
 ```
-ng new my-workspace --createApplication=false
-cd my-workspace
-ng add angular-mat-baum my-app
+ng new my-baum-wks --createApplication=false
+cd my-baum-wks
+ng add angular-mat-baum my-baum-app
 ng serve --open=true
 ```
+
+Go further with your `Baum App`
+
+```
+cd projects/my-baum-app/src/app
+ng g angular-mat-baum:module fruits --slice juices
+cd fruits
+ng g angular-mat-baum:slice candies
+ng g angular-mat-baum:component containers/juices --type container
+ng g angular-mat-baum:component containers/cadies --type container
+```
+
 
 ## The list of Schematics available
 
