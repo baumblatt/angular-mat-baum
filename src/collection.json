@@ -17,6 +17,11 @@
 			"schema": "./application/schema.json",
 			"private": true
 		},
+		"component": {
+			"description": "Creates a new component definition in the given or default project.",
+			"factory": "./component/component#factory",
+			"schema": "./component/schema.json"
+		},
 		"module": {
 			"description": "Create a feature Angular module in Baumblatt's opinionated way.",
 			"factory": "./module/module#factory",

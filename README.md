@@ -19,28 +19,45 @@ ng serve --open=true
 
 Add the library to your project, this schematic will install dependencies and run `App` schematic.
 
-> how to use:
+how to use:
 ```
-ng add angular-mat-baum [app-name] [--name app-name]
+ng add angular-mat-baum [app-name]
 ```
 *stage*: ready to use
+
+### Component
+
+Create a new component, that could be a container, a dialog or just a simple component.
+
+how to use:
+```
+ng g angular-mat-baum:component component-name [--type container|component|dialog]
+```
+> You can use almost all core Angular component options. 
+
+*stage*: early stage, needs attention and extra works, may generate inconsistent code.
 
 ### module
 
 Add a new module to an application
-> how to use:
+
+how to use:
 ```
-ng g angular-mat-baum:module [module-name] [--name module-name]
+ng g angular-mat-baum:module module-name
 ```
-*stage*: almost finished, needs extra work after use it.
+
+> You can use almost all core Angular module options.
+
+*stage*: almost finished.
 
 ### slice
 
 Create a new slice in the store feature.
-> how to use
+
+how to use:
 ```
 ng g angular-mat-baum:slice [slice-name] [--name slice-name]
 ```
-*stage*: early stage, needs attention and extra works, may generate inconsistent code.
+*stage*: almost finished.
 
 That's all, enjoy it!
