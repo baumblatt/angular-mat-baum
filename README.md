@@ -4,7 +4,7 @@ This is a strongly opinionated Angular Application Schematic using NgRx, Angular
 
 # Getting started with the Baum schematics
 
-Create a new Angular project without an application and add angular-mat-baum to generate your `Baum App`.
+Create a new Angular project without an application and add `angular-mat-baum` to generate your `Baum App`.
 
 ```
 ng new my-baum-wks --createApplication=false
