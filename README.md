@@ -37,7 +37,7 @@ how to use:
 ```
 ng add angular-mat-baum [app-name]
 ```
-*stage*: ready to use
+*stage*: advanced, but needs extra works because entry component and style.
 
 ### Component
 
