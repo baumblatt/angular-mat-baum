@@ -4,8 +4,8 @@ export function createCustomTheme (name = 'app') {
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.
-@import 'app/material/styles';
-@import 'app/core/styles';
+@import 'app/material/material.styles';
+@import 'app/core/core.styles';
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
