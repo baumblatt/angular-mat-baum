@@ -17,7 +17,7 @@ import * as ts from "typescript";
 import {createDefaultPath} from "@schematics/angular/utility/workspace";
 import {Change} from "@schematics/angular/utility/change";
 import {findNodes, getRouterModuleDeclaration} from "@schematics/angular/utility/ast-utils";
-import {getAngularSchematicsDefaults} from "../utils/utils";
+import {addMixin, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
 
 export function factory(_options: Module): Rule {
   return async (_tree: Tree, _context: SchematicContext) => {
@@ -55,17 +55,7 @@ export function factory(_options: Module): Rule {
 
         const changes: Change[] = [addRouteDeclarationToModule(source, routingModule, name)];
 
-        const recorder = tree.beginUpdate(routingModule);
-
-        for (const change of changes) {
-          if (change instanceof InsertChange) {
-            recorder.insertLeft(change.pos, change.toAdd);
-          }
-        }
-
-        tree.commitUpdate(recorder);
-
-        return tree;
+        return makeChanges(tree, routingModule, changes);
       },
       // add the menu item on sidebar navigation of layout html
       (tree) => {
@@ -159,6 +149,35 @@ export function factory(_options: Module): Rule {
             path: `${_options.path}/${name}`,
           }));
         }
+      },
+      // add style
+      () => {
+        return mergeWith(apply(url('./files/style'), [template({
+          ..._options,
+          ...strings,
+          path: `${_options.path}/${name}`
+        })]), MergeStrategy.AllowCreationConflict);
+      },
+      // call the style from module
+      (tree) => {
+        // todo: maybe a different module than Core.
+        const parentStylePath = `/${_options.path}/core/core.styles.scss`;
+
+        const changes: Change[] = addMixin(
+          tree,
+          parentStylePath,
+          `/${_options.path}/${name}/${name}.styles`
+        );
+
+        return makeChanges(tree, parentStylePath, changes);
+      },
+      // create the entry component
+      () => {
+        _context.addTask(new RunSchematicTask('component', {
+          name: 'entry',
+          type: 'container',
+          path: `${_options.path}/${name}/containers`,
+        }));
       }
     ]);
   }
