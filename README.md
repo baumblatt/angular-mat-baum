@@ -1,6 +1,6 @@
 # The Baum Project
 
-This is a strongly opinionated Angular Application Schematic using NgRx, Angular Flex Layout and Angular Material.
+A strongly opinionated Angular Application Schematic using NgRx, Angular Flex Layout and Angular Material.
 
 # Getting started with the Baum schematics
 
