@@ -1,12 +1,12 @@
 // Import library functions for theme creation.
 @import '~@angular/material/theming';
 
-@mixin <%= prefix %>-<%= dasherize(name) %>-container-theme($theme) {
+@mixin <%= selector %>-container-theme($theme) {
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
   $primary: map-get($theme, primary);
 
-  <%= prefix %>-<%= dasherize(name) {
+  <%= selector %> {
     div.container {
 
     }

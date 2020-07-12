@@ -10,10 +10,11 @@ import {
   Tree,
   url
 } from "@angular-devkit/schematics";
-import {createDefaultPath} from "@schematics/angular/utility/workspace";
+import {createDefaultPath, getWorkspace} from "@schematics/angular/utility/workspace";
 import {addMixin, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
 import {Path, strings} from "@angular-devkit/core";
 import {findModuleFromOptions} from "@schematics/angular/utility/find-module";
+import {parseName} from "@schematics/angular/utility/parse-name";
 
 export function factory(_options: Component): Rule {
 
@@ -26,6 +27,9 @@ export function factory(_options: Component): Rule {
       };
     }
 
+    const workspace = await getWorkspace(_tree);
+    const project = workspace.projects.get(_options.project as string);
+
     if (_options.path === undefined) {
       _options.path = await createDefaultPath(_tree, _options.project as string);
     }
@@ -33,6 +37,11 @@ export function factory(_options: Component): Rule {
     const modulePath = findModuleFromOptions(_tree, _options) as Path;
     // const moduleFile = modulePath.split('/').pop() || '';
     // const moduleName = moduleFile.split('.').reverse().pop() || '';
+
+    const parsedPath = parseName(_options.path as string, _options.name);
+    _options.name = parsedPath.name;
+    _options.path = parsedPath.path;
+    _options.selector = _options.selector || buildSelector(_options, project && project.prefix || '');
 
     const name = strings.dasherize(_options.name);
 
@@ -70,4 +79,15 @@ export function factory(_options: Component): Rule {
       // the dialog specific steps
     ]);
   }
+}
+
+function buildSelector(options: Component, projectPrefix: string) {
+  let selector = strings.dasherize(options.name);
+  if (options.prefix) {
+    selector = `${options.prefix}-${selector}`;
+  } else if (options.prefix === undefined && projectPrefix) {
+    selector = `${projectPrefix}-${selector}`;
+  }
+
+  return selector;
 }
