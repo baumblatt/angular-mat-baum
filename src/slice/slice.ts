@@ -15,6 +15,7 @@ import * as ts from "typescript";
 import {createDefaultPath} from "@schematics/angular/utility/workspace";
 import {findModuleFromOptions} from "@schematics/angular/utility/find-module";
 import {Change, NoopChange} from "@schematics/angular/utility/change";
+import {makeChanges} from "../utils/utils";
 
 function addReducerToStateInterface(source: ts.SourceFile, reducersPath: string, name: string): Change {
   const stateInterface = source.statements.find(
@@ -111,7 +112,7 @@ export function factory(_options: Slice): Rule {
     const modulePath = findModuleFromOptions(_tree, _options) as Path;
     const moduleFile = modulePath.split('/').pop() || '';
     const feature = moduleFile.split('.').reverse().pop() || '';
-    
+
     const name = strings.dasherize(_options.name);
 
     return chain([
@@ -146,16 +147,7 @@ export function factory(_options: Slice): Rule {
           `./store/effects/${name}.effects`
         ));
 
-        const recorder = tree.beginUpdate(modulePath);
-
-        for (const change of changes) {
-          if (change instanceof InsertChange) {
-            recorder.insertLeft(change.pos, change.toAdd);
-          }
-        }
-        tree.commitUpdate(recorder);
-
-        return tree;
+        return makeChanges(tree, modulePath, changes);
       },
       (tree) => {
         const featureReducePath = `${_options.path}/store/reducers/feature.reducer.ts`;
@@ -179,16 +171,7 @@ export function factory(_options: Slice): Rule {
         changes.push(addReducerToStateInterface(source, featureReducePath, name));
         changes.push(addReducerToActionReducerMap(source, featureReducePath, name));
 
-        const recorder = tree.beginUpdate(featureReducePath);
-
-        for (const change of changes) {
-          if (change instanceof InsertChange) {
-            recorder.insertLeft(change.pos, change.toAdd);
-          }
-        }
-        tree.commitUpdate(recorder);
-
-        return tree;
+        return makeChanges(tree, featureReducePath, changes)
       }
     ]);
   }

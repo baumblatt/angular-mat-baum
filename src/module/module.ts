@@ -75,20 +75,7 @@ export function factory(_options: Module): Rule {
 
         const changes: Change[] = [new ReplaceChange(layoutPath, position, matDivider, contentToInsert)]
 
-        const recorder = tree.beginUpdate(layoutPath);
-
-        for (const change of changes) {
-          if (change instanceof InsertChange) {
-            recorder.insertLeft(change.pos, change.toAdd);
-          } else if (change instanceof ReplaceChange) {
-            recorder.remove(change.pos, change.oldText.length);
-            recorder.insertLeft(change.pos, change.newText);
-          }
-        }
-
-        tree.commitUpdate(recorder);
-
-        return tree;
+        return makeChanges(tree, layoutPath, changes);
       },
       // create the feature store files from templates
       () => {
@@ -128,18 +115,7 @@ export function factory(_options: Module): Rule {
           './store/reducers/feature.reducer'
         ));
 
-        const recorder = tree.beginUpdate(`${_options.path}/${name}/${name}.module.ts`);
-
-        for (const change of changes) {
-          if (change instanceof InsertChange) {
-            recorder.insertLeft(change.pos, change.toAdd);
-          }
-        }
-
-        tree.commitUpdate(recorder);
-
-        return tree;
-
+        return makeChanges(tree, `${_options.path}/${name}/${name}.module.ts`, changes);
       },
       // create the store slice (if needed)
       () => {

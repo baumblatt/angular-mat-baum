@@ -14,11 +14,10 @@ import {
 import {createCustomTheme} from "./theme";
 
 import {
-	addImportToModule, insertImport,
+	addImportToModule, insertImport, ReplaceChange,
 } from '@ngrx/schematics/schematics-core';
 import * as ts from 'typescript';
 import {getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
-import {ReplaceChange} from "@schematics/angular/utility/change";
 
 export function factory(_options: App): Rule {
 	return (_tree: Tree, _context: SchematicContext) => {
@@ -196,8 +195,9 @@ export function factory(_options: App): Rule {
 				const source: Buffer = tree.read(index) as Buffer;
 
 				const old = 'width=device-width, initial-scale=1';
+				const position = source.toString().lastIndexOf(old);
 
-				const change = new ReplaceChange(index, source.toString().lastIndexOf(old), old,
+				const change = new ReplaceChange(index, position, old,
 					'viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
 				);
 
