@@ -14,10 +14,11 @@ import {
 import {createCustomTheme} from "./theme";
 
 import {
-	addImportToModule, InsertChange, insertImport,
+	addImportToModule, insertImport,
 } from '@ngrx/schematics/schematics-core';
 import * as ts from 'typescript';
-import {getAngularSchematicsDefaults} from "../utils/utils";
+import {getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
+import {ReplaceChange} from "@schematics/angular/utility/change";
 
 export function factory(_options: App): Rule {
 	return (_tree: Tree, _context: SchematicContext) => {
@@ -150,16 +151,7 @@ export function factory(_options: App): Rule {
 					'./store/reducers/custom-route-serializer'
 				));
 
-				const recorder = tree.beginUpdate(`projects/${name}/src/app/app.module.ts`);
-
-				for (const change of changes) {
-					if (change instanceof InsertChange) {
-						recorder.insertLeft(change.pos, change.toAdd);
-					}
-				}
-				tree.commitUpdate(recorder);
-
-				return tree;
+				return makeChanges(tree, `projects/${name}/src/app/app.module.ts`, changes);
 			},
 			(tree) => {
 				const source = ts.createSourceFile(
@@ -197,17 +189,20 @@ export function factory(_options: App): Rule {
 					'./store/reducers/feature.reducer'
 				));
 
-				const recorder = tree.beginUpdate(`projects/${name}/src/app/core/core.module.ts`);
-
-				for (const change of changes) {
-					if (change instanceof InsertChange) {
-						recorder.insertLeft(change.pos, change.toAdd);
-					}
-				}
-				tree.commitUpdate(recorder);
-
-				return tree;
+				return makeChanges(tree, `projects/${name}/src/app/core/core.module.ts`, changes);
 			},
+			(tree) => {
+				const index = `projects/${name}/src/index.html`;
+				const source: Buffer = tree.read(index) as Buffer;
+
+				const old = 'width=device-width, initial-scale=1';
+
+				const change = new ReplaceChange(index, source.toString().lastIndexOf(old), old,
+					'viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
+				);
+
+				return makeChanges(tree, index, [change]);
+			}
 		])
 	}
 }

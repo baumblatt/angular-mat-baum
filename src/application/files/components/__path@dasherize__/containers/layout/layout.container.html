@@ -1,16 +1,11 @@
-<div class="layout-container mat-app-background" fxLayout="column">
-    <mat-toolbar color="primary" fxFlex="0 0 64px" fxFlex.xs="0 0 56px">
-        <button (click)="toggle()" mat-icon-button fxHide.gt-sm="true">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <span><%= name %></span>
-        <div fxLayout="row" fxLayoutAlign="end stretch" fxFlex="1 1 auto">
-            <button mat-icon-button (click)="theme()"><mat-icon>brightness_6</mat-icon></button>
-        </div>
-    </mat-toolbar>
+<div class="layout-container mat-app-background" fxLayout="column" fxFlexFill>
+    <ng-container *ngIf="!mobileQuery.matches">
+        <ng-container *ngTemplateOutlet="header"></ng-container>
+    </ng-container>
     <mat-sidenav-container [class.dark]="theme$ | async">
-        <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
-                     [opened]="opened || !mobileQuery.matches" (closedStart)="close()">
+        <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                     [fixedInViewport]="mobileQuery.matches" [opened]="opened || !mobileQuery.matches"
+                     (closedStart)="close()">
             <mat-nav-list>
                 <mat-list-item (click)="closeAndGo('/core/layout/home');" routerLinkActive="active">
                     <mat-icon matListIcon>home</mat-icon>
@@ -23,13 +18,39 @@
                 </mat-list-item>
             </mat-nav-list>
         </mat-sidenav>
-        <mat-sidenav-content fxLayout="row" fxLayoutAlign="start stretch">
-            <div class="layout-content" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="1 1 100%">
+        <mat-sidenav-content fxLayout="column" fxLayoutAlign="start stretch">
+            <ng-container *ngIf="mobileQuery.matches">
+                <ng-container *ngTemplateOutlet="header"></ng-container>
+            </ng-container>
+            <div class="layout-content" fxLayout="column" fxLayoutAlign="start stretch"
+                 fxFlex="0 0 100%" fxFlex.sm="0 0 calc(100% - 128px)" fxFlex.xs="0 0 calc(100% - 112px)">
                 <router-outlet></router-outlet>
             </div>
+            <ng-container *ngIf="mobileQuery.matches">
+                <ng-container *ngTemplateOutlet="footer"></ng-container>
+            </ng-container>
         </mat-sidenav-content>
     </mat-sidenav-container>
+    <ng-container *ngIf="!mobileQuery.matches">
+        <ng-container *ngTemplateOutlet="footer"></ng-container>
+    </ng-container>
+</div>
+<ng-template #header>
+    <mat-toolbar color="primary" fxFlex="0 0 64px" fxFlex.xs="0 0 56px">
+        <button (click)="toggle()" mat-icon-button fxHide.gt-sm="true">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span><%= name %></span>
+        <div fxLayout="row" fxLayoutAlign="end stretch" fxFlex="1 1 auto">
+            <button mat-icon-button (click)="theme()">
+                <mat-icon>brightness_6</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
+</ng-template>
+
+<ng-template #footer>
     <mat-toolbar color="primary" fxFlex="0 0 64px" fxFlex.xs="0 0 56px">
     </mat-toolbar>
-</div>
+</ng-template>
 

@@ -1,5 +1,5 @@
 import {Tree} from "@angular-devkit/schematics";
-import {InsertChange} from "@ngrx/schematics/schematics-core";
+import {InsertChange, ReplaceChange} from "@ngrx/schematics/schematics-core";
 import {Change} from "@schematics/angular/utility/change";
 import {buildRelativePath} from "@schematics/angular/utility/find-module";
 
@@ -33,6 +33,9 @@ export const makeChanges = (tree: Tree, path: string, changes: Change[]) => {
   for (const change of changes) {
     if (change instanceof InsertChange) {
       recorder.insertLeft(change.pos, change.toAdd);
+    } else if (change instanceof ReplaceChange) {
+      recorder.remove(change.pos, change.oldText.length);
+      recorder.insertLeft(change.pos, change.newText);
     }
   }
 
