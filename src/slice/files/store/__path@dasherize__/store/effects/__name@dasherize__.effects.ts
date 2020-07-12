@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {sampleAction} from "../actions/<%= dasherize(name) %>.actions";
-import {mapTo} from "rxjs/operators";
-import {onAlert} from "../../../core/store/actions/messages.actions";
+import {sampleAction} from '../actions/<%= dasherize(name) %>.actions';
+import {mapTo} from 'rxjs/operators';
+import {onAlert} from '../../../core/store/actions/messages.actions';
 
 @Injectable()
 export class <%= classify(name) %>Effects {

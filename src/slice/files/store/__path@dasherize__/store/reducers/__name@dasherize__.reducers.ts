@@ -1,4 +1,4 @@
-import {Action, createReducer} from "@ngrx/store";
+import {Action, createReducer} from '@ngrx/store';
 
 export interface <%= classify(name) %>State {
 
