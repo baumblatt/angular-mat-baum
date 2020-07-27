@@ -1,5 +1,5 @@
-@import "containers/home/home.container.theme";
-@import "containers/layout/layout.container.theme";
+@import "./containers/home/home.container.theme";
+@import "./containers/layout/layout.container.theme";
 
 @mixin core-theme($theme) {
     @include app-home-container-theme($theme);
