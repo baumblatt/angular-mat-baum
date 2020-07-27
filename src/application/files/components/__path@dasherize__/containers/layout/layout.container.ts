@@ -59,14 +59,15 @@ export class LayoutContainer implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.theme$ = this.store.pipe(
       select(getPreferencesTheme),
       filter(color => {
         if (!color && (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           this.store.dispatch(setTheme({theme: 'dark'}));
+          return false;
         }
-        return !!color;
+        return true;
       }),
       tap(color => {
         if (color === 'dark') {
@@ -78,22 +79,15 @@ export class LayoutContainer implements OnInit {
     );
   }
 
-  close() {
+  close(): void {
     this.opened = false;
   }
 
-  theme() {
+  theme(): void {
     this.store.dispatch(toggleTheme());
   }
 
-  toggle() {
+  toggle(): void {
     this.opened = !this.opened;
-  }
-
-  async closeAndGo(url: string) {
-    if (this.mobileQuery.matches) {
-      await this.sidenav.close();
-    }
-    await this.router.navigateByUrl(url);
   }
 }

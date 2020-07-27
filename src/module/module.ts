@@ -67,7 +67,7 @@ export function factory(_options: Module): Rule {
 
         const position = source.toString().lastIndexOf(matDivider);
         const contentToInsert = `<mat-divider></mat-divider>
-                <mat-list-item (click)="closeAndGo('/core/layout/${name}');" routerLinkActive="active">
+                <mat-list-item (click)="close()" routerLink="/core/layout/${name}" routerLinkActive="active">
                     <mat-icon matListIcon>link</mat-icon>
                     <span>${strings.classify(name)}</span>
                 </mat-list-item>

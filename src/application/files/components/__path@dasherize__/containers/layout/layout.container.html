@@ -7,7 +7,7 @@
                      [fixedInViewport]="mobileQuery.matches" [opened]="opened || !mobileQuery.matches"
                      (closedStart)="close()">
             <mat-nav-list>
-                <mat-list-item (click)="closeAndGo('/core/layout/home');" routerLinkActive="active">
+                <mat-list-item (click)="close()" routerLink="/core/layout/home" routerLinkActive="active">
                     <mat-icon matListIcon>home</mat-icon>
                     <span>Home</span>
                 </mat-list-item>
