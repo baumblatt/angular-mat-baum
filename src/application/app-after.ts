@@ -47,8 +47,8 @@ export function factory(_options: App): Rule {
 			externalSchematic('@schematics/angular', 'component', {
 				...getAngularSchematicsDefaults(_tree, name)['@schematics/angular:component'],
 				project: name,
-				type: 'container',
-				name: 'containers/layout',
+				type: 'dialog',
+				name: 'components/loading',
 				path: `projects/${name}/src/app/core`,
 				style: 'scss',
 				skipTests: _options.skipTests
@@ -58,6 +58,15 @@ export function factory(_options: App): Rule {
 				project: name,
 				type: 'container',
 				name: 'containers/home',
+				path: `projects/${name}/src/app/core`,
+				style: 'scss',
+				skipTests: _options.skipTests
+			}),
+			externalSchematic('@schematics/angular', 'component', {
+				...getAngularSchematicsDefaults(_tree, name)['@schematics/angular:component'],
+				project: name,
+				type: 'container',
+				name: 'containers/layout',
 				path: `projects/${name}/src/app/core`,
 				style: 'scss',
 				skipTests: _options.skipTests

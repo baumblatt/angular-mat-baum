@@ -1,22 +1,39 @@
 import {createAction, props} from '@ngrx/store';
 
 export const onInfo = createAction(
-    '[App] Information',
+    '[core:message] Information',
     props<{ message: string}>(),
 );
 
 export const onAlert = createAction(
-    '[App] Alert',
+    '[core:message] Alert',
     props<{ message: string}>(),
 );
 
 export const onWarn = createAction(
-    '[App] Warning',
+    '[core:message] Warning',
     props<{ message: string, error?: any }>(),
 );
 
 export const onError = createAction(
-    '[App] Error',
+    '[core:message] Error',
     props<{ error: any }>(),
 );
 
+export const showLoading = createAction(
+  '[core:message] Show Loading',
+  props<{ message: string }>(),
+);
+
+export const showLoadingSuccess = createAction(
+  '[core:message] Show Loading Success',
+  props<{ dialogId: string }>(),
+);
+
+export const hideLoading = createAction(
+  '[core:message] Hide Loading',
+);
+
+export const hideLoadingSuccess = createAction(
+  '[core:message] Hide Loading Success',
+);
