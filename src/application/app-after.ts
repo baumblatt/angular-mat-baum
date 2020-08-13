@@ -12,12 +12,10 @@ import {
 	url
 } from '@angular-devkit/schematics';
 import {createCustomTheme} from "./theme";
-
-import {
-	addImportToModule, insertImport, ReplaceChange,
-} from '@ngrx/schematics/schematics-core';
 import * as ts from 'typescript';
 import {getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
+import {addImportToModule, insertImport} from "@schematics/angular/utility/ast-utils";
+import {ReplaceChange} from "@schematics/angular/utility/change";
 
 export function factory(_options: App): Rule {
 	return (_tree: Tree, _context: SchematicContext) => {
@@ -127,7 +125,7 @@ export function factory(_options: App): Rule {
 				changes.push(...addImportToModule(
 					source,
 					`projects/${name}/src/app/app.module.ts`,
-					`StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production})`,
+					`StoreDevtoolsModule.instrument({name: '${name}', maxAge: 25, logOnly: environment.production})`,
 					'@ngrx/store-devtools'
 				));
 

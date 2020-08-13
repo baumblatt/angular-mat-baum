@@ -10,13 +10,17 @@ import {
   Tree,
   url
 } from "@angular-devkit/schematics";
-import {addImportToModule, InsertChange, insertImport, ReplaceChange} from "@ngrx/schematics/schematics-core";
 import {strings} from "@angular-devkit/core";
 import {RunSchematicTask} from "@angular-devkit/schematics/tasks";
 import * as ts from "typescript";
 import {createDefaultPath} from "@schematics/angular/utility/workspace";
-import {Change} from "@schematics/angular/utility/change";
-import {findNodes, getRouterModuleDeclaration} from "@schematics/angular/utility/ast-utils";
+import {Change, InsertChange, ReplaceChange} from "@schematics/angular/utility/change";
+import {
+  addImportToModule,
+  findNodes,
+  getRouterModuleDeclaration,
+  insertImport
+} from "@schematics/angular/utility/ast-utils";
 import {addMixin, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
 
 export function factory(_options: Module): Rule {

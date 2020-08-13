@@ -9,13 +9,14 @@ import {
   Tree,
   url
 } from "@angular-devkit/schematics";
-import {addImportToModule, InsertChange, insertImport} from "@ngrx/schematics/schematics-core";
 import {Path, strings} from "@angular-devkit/core";
 import * as ts from "typescript";
 import {createDefaultPath} from "@schematics/angular/utility/workspace";
 import {findModuleFromOptions} from "@schematics/angular/utility/find-module";
-import {Change, NoopChange} from "@schematics/angular/utility/change";
+import {Change, InsertChange, NoopChange} from "@schematics/angular/utility/change";
 import {makeChanges} from "../utils/utils";
+import {addImportToModule, insertImport} from "@schematics/angular/utility/ast-utils";
+
 
 function addReducerToStateInterface(source: ts.SourceFile, reducersPath: string, name: string): Change {
   const stateInterface = source.statements.find(

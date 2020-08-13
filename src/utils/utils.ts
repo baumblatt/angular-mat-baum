@@ -1,6 +1,5 @@
 import {Tree} from "@angular-devkit/schematics";
-import {InsertChange, ReplaceChange} from "@ngrx/schematics/schematics-core";
-import {Change} from "@schematics/angular/utility/change";
+import {applyToUpdateRecorder, Change, InsertChange} from "@schematics/angular/utility/change";
 import {buildRelativePath} from "@schematics/angular/utility/find-module";
 
 export const getAngularSchematicsDefaults = (tree: Tree, project: string) => {
@@ -30,14 +29,16 @@ export const addMixin = (tree: Tree, stylePath: string, mixinPath: string) => {
 export const makeChanges = (tree: Tree, path: string, changes: Change[]) => {
   const recorder = tree.beginUpdate(path);
 
-  for (const change of changes) {
-    if (change instanceof InsertChange) {
-      recorder.insertLeft(change.pos, change.toAdd);
-    } else if (change instanceof ReplaceChange) {
-      recorder.remove(change.pos, change.oldText.length);
-      recorder.insertLeft(change.pos, change.newText);
-    }
-  }
+  applyToUpdateRecorder(recorder, changes);
+
+  // for (const change of changes) {
+  //   if (change instanceof InsertChange) {
+  //     recorder.insertLeft(change.pos, change.toAdd);
+  //   } else if (change instanceof ReplaceChange) {
+  //     recorder.remove(change.pos, change.oldText.length);
+  //     recorder.insertLeft(change.pos, change.newText);
+  //   }
+  // }
 
   tree.commitUpdate(recorder);
 
