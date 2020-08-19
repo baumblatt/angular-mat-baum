@@ -9,7 +9,7 @@
     "schema-slice": "npx -p dtsgenerator dtsgen src/slice/schema.json -o src/slice/schema.d.ts",
     "schema": "npm run schema-app && npm run schema-component && npm run schema-module && npm run schema-slice",
     "build": "tsc -p tsconfig.json",
-    "pack": "npm pack"
+    "pack": "npm pack && mv angular-mat-baum-1.*.tgz angular-mat-baum-nightly.tgz"
   },
   "keywords": [
     "schematics",
@@ -20,10 +20,10 @@
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-devkit/core": "^10.1.0-next.5",
-    "@angular-devkit/schematics": "^10.1.0-next.5",
+    "@angular-devkit/core": "^10.0.6",
+    "@angular-devkit/schematics": "^10.0.6",
     "@ngrx/schematics": "^10.0.0",
-    "@schematics/angular": "^10.1.0-next.5",
+    "@schematics/angular": "^10.0.6",
     "typescript": "~3.9.5"
   },
   "devDependencies": {

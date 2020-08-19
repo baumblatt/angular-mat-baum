@@ -1,5 +1,5 @@
 import {Tree} from "@angular-devkit/schematics";
-import {applyToUpdateRecorder, Change, InsertChange} from "@schematics/angular/utility/change";
+import {Change, InsertChange, ReplaceChange} from "@schematics/angular/utility/change";
 import {buildRelativePath} from "@schematics/angular/utility/find-module";
 
 export const getAngularSchematicsDefaults = (tree: Tree, project: string) => {
@@ -29,16 +29,20 @@ export const addMixin = (tree: Tree, stylePath: string, mixinPath: string) => {
 export const makeChanges = (tree: Tree, path: string, changes: Change[]) => {
   const recorder = tree.beginUpdate(path);
 
-  applyToUpdateRecorder(recorder, changes);
+  // before angular version 10.1.0
+  for (const change of changes) {
+    if (change instanceof InsertChange) {
+      recorder.insertLeft(change.pos, change.toAdd);
+    } else if (change instanceof ReplaceChange) {
+      // @ts-ignore
+      recorder.remove(change.pos, change.oldText.length);
+      // @ts-ignore
+      recorder.insertLeft(change.pos, change.newText);
+    }
+  }
 
-  // for (const change of changes) {
-  //   if (change instanceof InsertChange) {
-  //     recorder.insertLeft(change.pos, change.toAdd);
-  //   } else if (change instanceof ReplaceChange) {
-  //     recorder.remove(change.pos, change.oldText.length);
-  //     recorder.insertLeft(change.pos, change.newText);
-  //   }
-  // }
+  // waiting angular version 10.1.0.
+  // applyToUpdateRecorder(recorder, changes);
 
   tree.commitUpdate(recorder);
 
