@@ -10,20 +10,27 @@ export const getAngularSchematicsDefaults = (tree: Tree, project: string) => {
   }
 }
 
-export const addMixin = (tree: Tree, stylePath: string, mixinPath: string) => {
+export const addMixin = (tree: Tree, stylePath: string, mixinPath: string, mixin: string) => {
   const stylePathContent = tree.read(stylePath)?.toString() || '';
 
   const relativePath = buildRelativePath(stylePath, mixinPath);
+  const styleLines = stylePathContent.split('\n');
 
-  const changes = [new InsertChange(
+  const indentation = (stylePathContent.match(/^([ \t]+)@include/) || [undefined, '  '])[1];
+
+  return [new InsertChange(
     stylePath,
-    stylePathContent.split('\n').reduce((acc: number, cur: string) => {
+    styleLines.reduce((acc: number, cur: string) => {
       return cur.startsWith('@import') ? acc + cur.length + 1 : acc;
     }, 0),
     `@import "${relativePath}";\n`
+  ), new InsertChange(
+    stylePath,
+    styleLines.reduce((acc: number, cur: string) => {
+      return cur.startsWith('@mixin') || cur.indexOf('@include') > -1 ? acc + cur.length + 1 : acc;
+    }, stylePathContent.indexOf('@mixin')),
+    `${indentation}@include ${mixin}($theme);\n`
   )];
-
-  return changes;
 }
 
 export const makeChanges = (tree: Tree, path: string, changes: Change[]) => {

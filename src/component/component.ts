@@ -70,7 +70,8 @@ export function factory(_options: Component): Rule {
         const changes = addMixin(
           _tree,
           parentStylePath,
-          `/${_options.path}/${name}/${name}.${_options.type}.theme`
+          `/${_options.path}/${name}/${name}.${_options.type}.theme`,
+          `${_options.selector}-${_options.type}-theme`
         );
 
         return makeChanges(_tree, parentStylePath, changes);

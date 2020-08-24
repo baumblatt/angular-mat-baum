@@ -146,7 +146,8 @@ export function factory(_options: Module): Rule {
         const changes: Change[] = addMixin(
           tree,
           parentStylePath,
-          `/${_options.path}/${name}/${name}.styles`
+          `/${_options.path}/${name}/${name}.styles`,
+          `${name}-theme`
         );
 
         return makeChanges(tree, parentStylePath, changes);
