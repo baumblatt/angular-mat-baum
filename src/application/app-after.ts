@@ -132,7 +132,7 @@ export function factory(_options: App): Rule {
 				changes.push(...addImportToModule(
 					source,
 					`projects/${name}/src/app/app.module.ts`,
-					`StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer })`,
+					`StoreRouterConnectingModule.forRoot()`,
 					'@ngrx/router-store'
 				));
 
@@ -148,13 +148,6 @@ export function factory(_options: App): Rule {
 					`projects/${name}/src/app/app.module.ts`,
 					'environment',
 					'../environments/environment'
-				));
-
-				changes.push(insertImport(
-					source,
-					`projects/${name}/src/app/app.module.ts`,
-					'CustomSerializer',
-					'./store/reducers/custom-route-serializer'
 				));
 
 				return makeChanges(tree, `projects/${name}/src/app/app.module.ts`, changes);
