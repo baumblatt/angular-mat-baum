@@ -92,6 +92,18 @@
 				text-align: right;
 			}
 		}
+
+		&.medium {
+			div.mat-form-field-infix {
+				width: 120px;
+			}
+		}
+
+		&.small {
+			div.mat-form-field-infix {
+				width: 80px;
+			}
+		}
 	}
 
 

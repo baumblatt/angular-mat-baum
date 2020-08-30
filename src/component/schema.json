@@ -74,7 +74,8 @@
       "enum": [
         "component",
         "container",
-        "dialog"
+        "dialog",
+        "bottom-sheet"
       ]
     },
     "skipTests": {
