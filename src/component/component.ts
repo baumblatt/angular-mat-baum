@@ -11,14 +11,14 @@ import {
   url
 } from "@angular-devkit/schematics";
 import {createDefaultPath, getWorkspace} from "@schematics/angular/utility/workspace";
-import {addMixin, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
+import {addMethod, addMixin, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
 import {Path, strings} from "@angular-devkit/core";
 import {buildRelativePath, findModuleFromOptions} from "@schematics/angular/utility/find-module";
 import {parseName} from "@schematics/angular/utility/parse-name";
 import {insertImport} from "@schematics/angular/utility/ast-utils";
 import {classify} from "@angular-devkit/core/src/utils/strings";
-import ts = require("typescript");
 import {ReplaceChange} from "@schematics/angular/utility/change";
+import ts = require("typescript");
 
 export function factory(_options: Component): Rule {
 
@@ -144,6 +144,10 @@ export function factory(_options: Component): Rule {
             `(public dialogRef: MatDialogRef<${classify(name)}Dialog>, @Inject(MAT_DIALOG_DATA) public data: any)`
           ));
 
+          changes.push(addMethod(source, componentPath,
+            `  close(): void {\n    this.dialogRef.close();\n  }`
+          ));
+
           return makeChanges(_tree, componentPath, changes);
         }
       },
@@ -176,6 +180,10 @@ export function factory(_options: Component): Rule {
             source,
             componentPath,
             `(private bottomSheetRef: MatBottomSheetRef<${classify(name)}BottomSheet>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any)`
+          ));
+
+          changes.push(addMethod(source, componentPath,
+            `  close(): void {\n    this.bottomSheetRef.dismiss();\n  }`
           ));
 
           return makeChanges(_tree, componentPath, changes);

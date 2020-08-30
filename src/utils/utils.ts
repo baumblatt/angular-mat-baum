@@ -1,6 +1,7 @@
 import {Tree} from "@angular-devkit/schematics";
 import {Change, InsertChange, ReplaceChange} from "@schematics/angular/utility/change";
 import {buildRelativePath} from "@schematics/angular/utility/find-module";
+import ts = require("typescript");
 
 export const getAngularSchematicsDefaults = (tree: Tree, project: string) => {
   if (tree.exists('angular.json')) {
@@ -31,6 +32,16 @@ export const addMixin = (tree: Tree, stylePath: string, mixinPath: string, mixin
     }, stylePathContent.indexOf('@mixin')),
     `${indentation}@include ${mixin}($theme);\n`
   )];
+}
+
+export const addMethod = (source: ts.SourceFile, componentPath: string, method: string) => {
+  const componentClass = source.statements.find(
+    (stm: any) => stm.kind === ts.SyntaxKind.ClassDeclaration
+  ) as ts.ClassDeclaration;
+
+  const end = componentClass.end;
+
+  return new InsertChange(componentPath, end - 2, method);
 }
 
 export const makeChanges = (tree: Tree, path: string, changes: Change[]) => {
