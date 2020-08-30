@@ -13,7 +13,7 @@ ng add angular-mat-baum my-baum-app
 ng serve --open=true
 ```
 
-Go further with your `Baum App`, create a future module, a second slice and two containers.
+Go further with your `Baum App`, create a future `module`, a second `slice`, two `containers`, one `dialog` and one `bottom-sheet.
 
 ```
 cd projects/my-baum-app/src/app
@@ -22,6 +22,8 @@ cd fruits
 ng g angular-mat-baum:slice candies
 ng g angular-mat-baum:component containers/juices --type container
 ng g angular-mat-baum:component containers/cadies --type container
+ng g angular-mat-baum:component components/juices --type dialog
+ng g angular-mat-baum:component components/cadies-detail --type bottom-sheet
 ```
 
 > Please, use the latest Angular CLI version, or review dependencies versions on package.json, is 
@@ -37,19 +39,19 @@ how to use:
 ```
 ng add angular-mat-baum [app-name]
 ```
-*stage*: advanced, but needs extra works because entry component and style.
+*stage*: almost finished.
 
 ### Component
 
-Create a new component, that could be a container, a dialog or just a simple component.
+Create a new component, that could be a container, a dialog, a bottom-sheet or just a simple component.
 
 how to use:
 ```
-ng g angular-mat-baum:component component-name [--type container|component|dialog]
+ng g angular-mat-baum:component component-name [--type container|component|dialog|bottom-sheet]
 ```
 > You can use almost all core Angular component options. 
 
-*stage*: early stage, needs attention and extra works, may generate inconsistent code.
+*stage*: almost finished.
 
 ### module
 
