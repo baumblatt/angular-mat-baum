@@ -26,6 +26,11 @@
       "format": "path",
       "description": "The path at which to create the NgModule, relative to the workspace root.",
       "visible": false
+    },
+    "verbose":  {
+      "description": "Display additional details about internal operations during execution.",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [

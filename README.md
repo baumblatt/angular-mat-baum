@@ -26,8 +26,14 @@ ng g angular-mat-baum:component components/juices --type dialog
 ng g angular-mat-baum:component components/cadies-detail --type bottom-sheet
 ```
 
-> Please, use the latest Angular CLI version, or review dependencies versions on package.json, is 
-> strongly recommend that your App use the same major version for all @angular/* libraries.
+### Compatibility Table
+
+| CLI    | Typescript | Baum               |
+|:-------|:----------:|:------------------:|
+| 10.0.x |  ~3.9.5    | <= 1.0.0-beta.13   |         
+| 10.1.x |  ~4.0.2    | 1.0.0-beta.14 over |
+
+> Please, choose the Angular Baum version as compatibility table above.
 
 ## The list of Schematics available
 

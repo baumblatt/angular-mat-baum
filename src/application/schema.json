@@ -27,6 +27,11 @@
       "default": false,
       "alias": "S",
       "x-user-analytics": 12
+    },
+    "verbose":  {
+      "description": "Display additional details about internal operations during execution.",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [

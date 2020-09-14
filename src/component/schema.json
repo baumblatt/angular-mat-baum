@@ -127,6 +127,11 @@
       "default": false,
       "description": "When true, applies lint fixes after generating the component.",
       "x-user-analytics": 15
+    },
+    "verbose":  {
+      "description": "Display additional details about internal operations during execution.",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [

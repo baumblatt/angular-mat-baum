@@ -21,7 +21,7 @@ import {
   getRouterModuleDeclaration,
   insertImport
 } from "@schematics/angular/utility/ast-utils";
-import {addMixin, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
+import {addMixin, debug, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
 
 export function factory(_options: Module): Rule {
   return async (_tree: Tree, _context: SchematicContext) => {
@@ -31,6 +31,8 @@ export function factory(_options: Module): Rule {
     if (_options.path === undefined) {
       _options.path = await createDefaultPath(_tree, _options.project as string);
     }
+
+    debug(_options, 'Creating the feature module');
 
     return chain([
 
@@ -48,6 +50,7 @@ export function factory(_options: Module): Rule {
       // add route declaration to core routing module
       (tree) => {
         // todo: maybe a different module than Core.
+        debug(_options, 'Creating the route of feature module on core module.');
         const routingModule = `${_options.path}/core/core-routing.module.ts`;
 
         const source = ts.createSourceFile(
@@ -64,6 +67,7 @@ export function factory(_options: Module): Rule {
       // add the menu item on sidebar navigation of layout html
       (tree) => {
         // todo: maybe a different module than Core.
+        debug(_options, 'Creating the link of feature module on layout container.');
         const layoutPath = `${_options.path}/core/containers/layout/layout.container.html`;
         const source: Buffer = tree.read(layoutPath) as Buffer;
 
@@ -83,6 +87,7 @@ export function factory(_options: Module): Rule {
       },
       // create the feature store files from templates
       () => {
+        debug(_options, 'Creating feature store.');
         return mergeWith(apply(url('./files/store'), [template({
           ..._options,
           ...strings,
@@ -91,6 +96,7 @@ export function factory(_options: Module): Rule {
       },
       // import store and effects modules from NgRx
       (tree) => {
+        debug(_options, 'Initializing the store on feature module.');
         const source = ts.createSourceFile(
           `${_options.path}/${name}/${name}.module.ts`,
           // @ts-ignore
@@ -124,6 +130,7 @@ export function factory(_options: Module): Rule {
       // create the store slice (if needed)
       () => {
         if (!!_options.slice) {
+          debug(_options, 'Calling the slice schematic.');
           _context.addTask(new RunSchematicTask('slice', {
             name: _options.slice,
             path: `${_options.path}/${name}`,
@@ -132,6 +139,7 @@ export function factory(_options: Module): Rule {
       },
       // add style
       () => {
+        debug(_options, 'Creating the feature module style.');
         return mergeWith(apply(url('./files/style'), [template({
           ..._options,
           ...strings,
@@ -141,6 +149,7 @@ export function factory(_options: Module): Rule {
       // call the style from module
       (tree) => {
         // todo: maybe a different module than Core.
+        debug(_options, 'Adding the feature module style on core style.');
         const parentStylePath = `/${_options.path}/core/core.styles.scss`;
 
         const changes: Change[] = addMixin(
@@ -154,6 +163,7 @@ export function factory(_options: Module): Rule {
       },
       // create the entry component
       () => {
+        debug(_options, 'Calling the entry component schematics.');
         _context.addTask(new RunSchematicTask('component', {
           name: 'entry',
           type: 'container',

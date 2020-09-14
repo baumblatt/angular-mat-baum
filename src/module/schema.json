@@ -45,6 +45,11 @@
     "slice": {
       "type": "string",
       "description": "When present, create a slice of the Store with this name."
+    },
+    "verbose":  {
+      "description": "Display additional details about internal operations during execution.",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [

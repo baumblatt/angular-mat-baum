@@ -3,6 +3,12 @@ import {Change, InsertChange, ReplaceChange} from "@schematics/angular/utility/c
 import {buildRelativePath} from "@schematics/angular/utility/find-module";
 import ts = require("typescript");
 
+export const debug = (options: {verbose?: boolean}, message: string) => {
+  if (options.verbose) {
+    console.log(message);
+  }
+}
+
 export const getAngularSchematicsDefaults = (tree: Tree, project: string) => {
   if (tree.exists('angular.json')) {
     const sourceText = tree.read('angular.json')!.toString('utf-8');

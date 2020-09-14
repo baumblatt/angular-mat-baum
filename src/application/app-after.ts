@@ -13,7 +13,7 @@ import {
 } from '@angular-devkit/schematics';
 import {createCustomTheme} from "./theme";
 import * as ts from 'typescript';
-import {getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
+import {debug, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
 import {addImportToModule, insertImport} from "@schematics/angular/utility/ast-utils";
 import {ReplaceChange} from "@schematics/angular/utility/change";
 
@@ -22,6 +22,7 @@ export function factory(_options: App): Rule {
 
 		const {name} = _options;
 
+		debug(_options, 'Creating additional modules and components');
 		return chain([
 			externalSchematic('@angular/material', 'ng-add', {
 				project: name,
@@ -70,6 +71,7 @@ export function factory(_options: App): Rule {
 				skipTests: _options.skipTests
 			}),
 			() => {
+				debug(_options, 'Updating the modules created');
 				return mergeWith(apply(url('./files/modules'), [template({
 					..._options,
 					...strings,
@@ -77,6 +79,7 @@ export function factory(_options: App): Rule {
 				})]), MergeStrategy.AllowCreationConflict);
 			},
 			() => {
+				debug(_options, 'Updating styles');
 				return mergeWith(apply(url('./files/styles'), [template({
 					..._options,
 					...strings,
@@ -84,6 +87,7 @@ export function factory(_options: App): Rule {
 				})]), MergeStrategy.AllowCreationConflict);
 			},
 			() => {
+				debug(_options, 'Updating components');
 				return mergeWith(apply(url('./files/components'), [template({
 					..._options,
 					...strings,
@@ -94,6 +98,7 @@ export function factory(_options: App): Rule {
 				tree.overwrite(`projects/${name}/src/styles.scss`, createCustomTheme(strings.dasherize(name)))
 			},
 			() => {
+				debug(_options, 'Creating the store of App and Core modules');
 				return mergeWith(apply(url('./files/store'), [template({
 					..._options,
 					...strings,
@@ -101,6 +106,7 @@ export function factory(_options: App): Rule {
 				})]), MergeStrategy.AllowCreationConflict);
 			},
 			(tree) => {
+				debug(_options, 'Initializing the store on App module');
 				const source = ts.createSourceFile(
 					`projects/${name}/src/app/app.module.ts`,
 					// @ts-ignore
@@ -153,6 +159,7 @@ export function factory(_options: App): Rule {
 				return makeChanges(tree, `projects/${name}/src/app/app.module.ts`, changes);
 			},
 			(tree) => {
+				debug(_options, 'Initializing the store on Core module');
 				const source = ts.createSourceFile(
 					`projects/${name}/src/app/core/core.module.ts`,
 					// @ts-ignore
@@ -191,6 +198,8 @@ export function factory(_options: App): Rule {
 				return makeChanges(tree, `projects/${name}/src/app/core/core.module.ts`, changes);
 			},
 			(tree) => {
+				debug(_options, 'Updating the index.html view port');
+
 				const index = `projects/${name}/src/index.html`;
 				const source: Buffer = tree.read(index) as Buffer;
 

@@ -14,7 +14,7 @@ import * as ts from "typescript";
 import {createDefaultPath} from "@schematics/angular/utility/workspace";
 import {findModuleFromOptions} from "@schematics/angular/utility/find-module";
 import {Change, InsertChange, NoopChange} from "@schematics/angular/utility/change";
-import {makeChanges} from "../utils/utils";
+import {debug, makeChanges} from "../utils/utils";
 import {addImportToModule, insertImport} from "@schematics/angular/utility/ast-utils";
 
 
@@ -119,6 +119,7 @@ export function factory(_options: Slice): Rule {
     return chain([
 
       () => {
+        debug(_options, 'Creating the slice actions, effects, reducers and selectors.');
         return mergeWith(apply(url('./files/store'), [template({
           ..._options,
           ...strings,
@@ -127,6 +128,7 @@ export function factory(_options: Slice): Rule {
         })]), MergeStrategy.AllowCreationConflict);
       },
       (tree) => {
+        debug(_options, 'Initializing the slice effects on feature module.');
         const source = ts.createSourceFile(
           modulePath,
           // @ts-ignore
@@ -151,6 +153,7 @@ export function factory(_options: Slice): Rule {
         return makeChanges(tree, modulePath, changes);
       },
       (tree) => {
+        debug(_options, 'Initializing the slice reduce on feature module reducer.');
         const featureReducePath = `${_options.path}/store/reducers/feature.reducer.ts`;
 
         const source = ts.createSourceFile(

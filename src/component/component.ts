@@ -11,7 +11,7 @@ import {
   url
 } from "@angular-devkit/schematics";
 import {createDefaultPath, getWorkspace} from "@schematics/angular/utility/workspace";
-import {addMethod, addMixin, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
+import {addMethod, addMixin, debug, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
 import {Path, strings} from "@angular-devkit/core";
 import {buildRelativePath, findModuleFromOptions} from "@schematics/angular/utility/find-module";
 import {parseName} from "@schematics/angular/utility/parse-name";
@@ -45,6 +45,8 @@ export function factory(_options: Component): Rule {
 
     const name = strings.dasherize(_options.name);
 
+    debug(_options, 'Creating the component');
+
     return chain([
       // create the component using original Angular Schematics
       externalSchematic('@schematics/angular', 'component', {
@@ -57,6 +59,7 @@ export function factory(_options: Component): Rule {
       }),
       // insert template files based on type
       () => {
+        debug(_options, 'Updating the created component');
         return mergeWith(apply(url(`./files/${_options.type}`), [template({
           ..._options,
           ...strings,
@@ -65,6 +68,7 @@ export function factory(_options: Component): Rule {
       },
       // add style
       (_tree) => {
+        debug(_options, 'Reference the component on module theme scss');
         const parentStylePath = `${modulePath.split('.').reverse().pop()}.styles.scss`;
 
         const changes = addMixin(
@@ -79,6 +83,8 @@ export function factory(_options: Component): Rule {
       // the container specific steps
       (_tree) => {
         if (_options.type === 'container') {
+          debug(_options, 'Update container components');
+
           const componentPath = `${_options.path}/${name}/${name}.${_options.type}.ts`;
 
           const source = ts.createSourceFile(
@@ -116,6 +122,8 @@ export function factory(_options: Component): Rule {
       // the dialog specific steps
       (_tree) => {
         if (_options.type === 'dialog') {
+          debug(_options, 'Update dialog components');
+
           const componentPath = `${_options.path}/${name}/${name}.${_options.type}.ts`;
 
           const source = ts.createSourceFile(
@@ -154,6 +162,8 @@ export function factory(_options: Component): Rule {
       // the bottom-sheet specific steps
       (_tree) => {
         if (_options.type === 'bottom-sheet') {
+          debug(_options, 'Update bottom-sheet components');
+
           const componentPath = `${_options.path}/${name}/${name}.${_options.type}.ts`;
 
           const source = ts.createSourceFile(
