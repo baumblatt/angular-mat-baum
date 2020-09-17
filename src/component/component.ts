@@ -41,8 +41,6 @@ export function factory(_options: Component): Rule {
     _options.path = parsedPath.path;
     _options.selector = _options.selector || buildSelector(_options, project && project.prefix || '');
 
-    console.log('path after after', _options.path);
-
     const name = strings.dasherize(_options.name);
 
     debug(_options, 'Creating the component');
