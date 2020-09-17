@@ -27,12 +27,6 @@
       },
       "x-prompt": "What name would you like to use for the component?"
     },
-    "displayBlock": {
-      "description": "Specifies if the style will contain `:host { display: block; }`.",
-      "type": "boolean",
-      "default": false,
-      "alias": "b"
-    },
     "viewEncapsulation": {
       "description": "The view encapsulation strategy to use in the new component.",
       "enum": ["Emulated", "Native", "None", "ShadowDom"],
@@ -54,22 +48,9 @@
         }
       ]
     },
-    "style": {
-      "description": "The file extension or preprocessor to use for style files.",
-      "type": "string",
-      "default": "css",
-      "enum": [
-        "css",
-        "scss",
-        "sass",
-        "less",
-        "styl"
-      ],
-      "x-user-analytics": 5
-    },
     "type": {
       "type": "string",
-      "description": "Define each kind of component to be created, use component, container or dialog.",
+      "description": "Define each kind of component to be created, use component, container, dialog or bottom-sheet.",
       "default": "component",
       "enum": [
         "component",
@@ -83,17 +64,6 @@
       "description": "When true, does not create \"spec.ts\" test files for the new component.",
       "default": false,
       "x-user-analytics": 12
-    },
-    "flat": {
-      "type": "boolean",
-      "description": "When true, creates the new files at the top level of the current project.",
-      "default": false
-    },
-    "skipImport": {
-      "type": "boolean",
-      "description": "When true, does not import this component into the owning NgModule.",
-      "default": false,
-      "x-user-analytics": 18
     },
     "selector": {
       "type": "string",
@@ -115,12 +85,6 @@
       "default": false,
       "description": "When true, the declaring NgModule exports this component.",
       "x-user-analytics": 19
-    },
-    "entryComponent": {
-      "type": "boolean",
-      "default": false,
-      "description": "When true, the new component is the entry component of the declaring NgModule.",
-      "x-deprecated": "Since version 9.0.0 with Ivy, entryComponents is no longer necessary."
     },
     "lintFix": {
       "type": "boolean",

@@ -2,17 +2,17 @@
 	"$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
 	"schematics": {
 		"ng-add": {
-			"description": "Add The Baum Project and create an Angular application in Baumblatt's opinionated way.",
+			"description": "Add The Baum Project and create an Angular application in angular-mat-baum opinionated style.",
 			"factory": "./application/add#factory",
 			"schema": "./application/schema.json"
 		},
 		"app": {
-			"description": "Create an Angular application in Baumblatt's opinionated way.",
+			"description": "Create an Angular application in angular-mat-baum opinionated style.",
 			"factory": "./application/app#factory",
 			"schema": "./application/schema.json"
 		},
 		"app-after": {
-			"description": "Continue the application scaffold after dependencies installs.",
+			"description": "Continue the application generation after dependencies installs.",
 			"factory": "./application/app-after#factory",
 			"schema": "./application/schema.json",
 			"private": true
@@ -23,12 +23,12 @@
 			"schema": "./component/schema.json"
 		},
 		"module": {
-			"description": "Create a feature Angular module in Baumblatt's opinionated way.",
+			"description": "Create a feature module in angular-mat-baum opinionated style.",
 			"factory": "./module/module#factory",
 			"schema": "./module/schema.json"
 		},
 		"slice": {
-			"description": "Create a new slice in a feature store.",
+			"description": "Create a new store slice in a feature module store.",
 			"factory": "./slice/slice#factory",
 			"schema": "./slice/schema.json"
 		}

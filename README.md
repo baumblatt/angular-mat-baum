@@ -35,51 +35,110 @@ ng g angular-mat-baum:component components/cadies-detail --type bottom-sheet
 
 > Please, choose the Angular Baum version as compatibility table above.
 
-## The list of Schematics available
+## The `angular-mat-baum` Schematics
 
-### add
+### Add
 
-Add the library to your project, this schematic will install dependencies and run `App` schematic.
+Add the library to your project, this schematic will install dependencies and run `Application` schematic.
 
 how to use:
 ```
 ng add angular-mat-baum [app-name]
 ```
-*stage*: almost finished.
+
+### Application
+
+Create an Angular application in angular-mat-baum opinionated style. 
+
+This schematic will create an application with
+4 modules (App, Core, Shared, Material), A layout component with Material SideNav and Angular Flex Layout, 
+Light and Dark Material themes, NgRx Store configured with Router State and DevTools and a few actions and effects like
+Loading and Snack Bars.
+
+#### how to use:
+```
+ng g angular-mat-baum:app [app-name]
+```
+
+#### Flavors:
+
+| Option    | Description                                                 |
+|:----------|:------------------------------------------------------------|
+| name      | The name of the your application.                           |
+| prefix    | A prefix to apply to generated selectors.                   |
+| skipTests | When true, does not create `spec.ts` test files for the app.|
 
 ### Component
 
-Create a new component, that could be a container, a dialog, a bottom-sheet or just a simple component.
+Creates a new component definition in the given or default project.
+
+The component could be a container that will have the module store injected on your constructor, 
+an Angular Material dialog, an Angular Material bottom sheet or just a simple component. All type of component
+will have an Angular Material scss theme imported under correspond module.
+
+#### Flavors:
+
+| Option    | Description                                                 |
+|:----------|:------------------------------------------------------------|
+| name      | The name of the component.                                  |
+| path      | The path at which to create the component file, relative to the current workspace. Default is a folder with the same name as the component in the project root..                   |
+| project   | The name of the project.                                    |
+| viewEncapsulation   | The view encapsulation strategy to use in the new component. |
+| prefix    | The prefix to apply to the generated component selector.    |
+| type      | Define each kind of component to be created, use `component`, `container`, `dialog` or `bottom-sheet`. |
+| skipTests | When true, does not create `spec.ts` test files for the app.|
+| selector  | The HTML selector to use for this component.                |
+| skipSelector| Specifies if the component should have a selector or not. |
+| module    | The declaring NgModule.                                     |
+| export    | When true, the declaring NgModule exports this component.   |
+| lintFix   | When true, applies lint fixes after generating the component.|
 
 how to use:
 ```
 ng g angular-mat-baum:component component-name [--type container|component|dialog|bottom-sheet]
 ```
-> You can use almost all core Angular component options. 
 
-*stage*: almost finished.
+### Module
 
-### module
+Create a feature module in angular-mat-baum opinionated style.
 
-Add a new module to an application
+This module will have an equivalent router module, a NgRx feature store, an entry component of type `container`,
+an Angular Material scss theme file that will be imported on Core module style and will be used to import the module
+components.
+
+Optionally the module store can be created with a store `slice` using the same option name, please see `slice` schematic for more details. 
 
 how to use:
 ```
 ng g angular-mat-baum:module module-name
 ```
 
-> You can use almost all core Angular module options.
+#### Flavors:
 
-*stage*: almost finished.
+| Option    | Description                                                 |
+|:----------|:------------------------------------------------------------|
+| name      | The name of the NgModule.                                   |
+| path      | The path at which to create the NgModule, relative to the workspace root. |
+| project   | The name of the project.                                    |
+| lintFix   | When true, applies lint fixes after generating the module.  |
+| slice     | When present, create a slice of the Store with this name.   |
 
-### slice
+### Slice
 
-Create a new slice in the store feature.
+Creates a new Store slice in angular-mat-baum opinionated style.
+
+A Slice Store is a set of actions, effects, reducers and selectors that will tied under an action reducer map entry of
+the feature module state. 
 
 how to use:
 ```
 ng g angular-mat-baum:slice [slice-name] [--name slice-name]
 ```
-*stage*: almost finished.
 
-That's all, enjoy it!
+#### Flavors:
+
+| Option    | Description                                                 |
+|:----------|:------------------------------------------------------------|
+| name      | The name of the slice of the store feature.                 |
+| path      | The path used to find the NgModule, relative to the workspace root. |
+| project   | The name of the project.                                    |

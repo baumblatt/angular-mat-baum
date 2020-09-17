@@ -27,15 +27,6 @@
         "$source": "projectName"
       }
     },
-    "route": {
-      "type": "string",
-      "description": "The route path for a lazy-loaded module. When supplied, creates a component in the new module, and adds the route to that component in the `Routes` array declared in the module provided in the `--module` option."
-    },
-    "module":  {
-      "type": "string",
-      "description": "The declaring NgModule.",
-      "alias": "m"
-    },
     "lintFix": {
       "type": "boolean",
       "default": false,
