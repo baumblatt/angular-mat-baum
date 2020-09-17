@@ -4,12 +4,12 @@ import { preferencesReducer, PreferencesState } from "./preferences.reducers";
 
 export interface CoreState {
 	messages: MessagesState;
-	preferences: PreferencesState
+	preferences: PreferencesState;
 }
 
 export const coreReducers: ActionReducerMap<CoreState> = {
 	messages: messagesReducer,
-	preferences: preferencesReducer
+	preferences: preferencesReducer,
 };
 
 export const getCoreState = createFeatureSelector<CoreState>(
