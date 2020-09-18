@@ -1,10 +1,21 @@
 import {Tree} from "@angular-devkit/schematics";
-import {Change, InsertChange, ReplaceChange} from "@schematics/angular/utility/change";
+import {
+  applyToUpdateRecorder,
+  Change,
+  InsertChange,
+  NoopChange,
+  ReplaceChange
+} from "@schematics/angular/utility/change";
 import {buildRelativePath} from "@schematics/angular/utility/find-module";
 import ts = require("typescript");
+import {strings} from "@angular-devkit/core";
+import {InsertChange as InsertChange2, ReplaceChange as ReplaceChange2} from "../schematics-core";
+
 
 export const debug = (options: {verbose?: boolean}, message: string) => {
   if (options.verbose) {
+    console.log(message);
+  } else {
     console.log(message);
   }
 }
@@ -50,25 +61,106 @@ export const addMethod = (source: ts.SourceFile, componentPath: string, method: 
   return new InsertChange(componentPath, end - 2, method);
 }
 
+const reviewChanges = (changes: Change[]): Change[] => {
+  return changes.map(change => {
+    if (change instanceof InsertChange2) {
+      return new InsertChange(change.path, change.pos, change.toAdd);
+    } else if (change instanceof ReplaceChange2) {
+      return new ReplaceChange(change.path, change.pos, change.oldText, change.newText);
+    }
+
+    return change;
+  });
+}
+
 export const makeChanges = (tree: Tree, path: string, changes: Change[]) => {
   const recorder = tree.beginUpdate(path);
+  applyToUpdateRecorder(recorder, reviewChanges(changes));
+  tree.commitUpdate(recorder);
+  return tree;
+}
 
-  // before angular version 10.1.0
-  for (const change of changes) {
-    if (change instanceof InsertChange) {
-      recorder.insertLeft(change.pos, change.toAdd);
-    } else if (change instanceof ReplaceChange) {
-      // @ts-ignore
-      recorder.remove(change.pos, change.oldText.length);
-      // @ts-ignore
-      recorder.insertLeft(change.pos, change.newText);
+export const addReducerToStateInterface = (source: ts.SourceFile, reducersPath: string, name: string): Change => {
+  const stateInterface = source.statements.find(
+    (stm) => stm.kind === ts.SyntaxKind.InterfaceDeclaration
+  );
+  let node = stateInterface as ts.Statement;
+
+  if (!node) {
+    return new NoopChange();
+  }
+
+  const keyInsert = `${strings.camelize(name)}: ${strings.classify(name)}State;`;
+
+  const expr = node as any;
+  let position;
+  let toInsert;
+
+  if (expr.members.length === 0) {
+    position = expr.getEnd() - 1;
+    toInsert = `  ${keyInsert}\n`;
+  } else {
+    node = expr.members[expr.members.length - 1];
+    position = node.getEnd() + 1;
+    // Get the indentation of the last element, if any.
+    const text = node.getFullText(source);
+    const matches = text.match(/^\r?\n+(\s*)/);
+
+    if (matches!.length > 0) {
+      toInsert = `${matches![1]}${keyInsert}\n`;
+    } else {
+      toInsert = `\n${keyInsert}`;
     }
   }
 
-  // waiting angular version 10.1.0.
-  // applyToUpdateRecorder(recorder, changes);
+  return new InsertChange(reducersPath, position, toInsert);
+}
 
-  tree.commitUpdate(recorder);
+export const addReducerToActionReducerMap = (source: ts.SourceFile, reducersPath: string, name: string): Change => {
+  const actionReducerMap: any = source.statements
+    .filter((stm) => stm.kind === ts.SyntaxKind.VariableStatement)
+    .filter((stm: any) => !!stm.declarationList)
+    .map((stm: any) => {
+      const { declarations }: { declarations: ts.SyntaxKind.VariableDeclarationList[] } = stm.declarationList;
 
-  return tree;
+      const variable: any = declarations.find(
+        (decl: any) => decl.kind === ts.SyntaxKind.VariableDeclaration
+      );
+      const type = variable ? variable.type : {};
+
+      return { initializer: variable.initializer, type };
+    })
+    .filter((initWithType) => initWithType.type !== undefined)
+    .find(({ type }) => type.typeName.text === 'ActionReducerMap');
+
+  if (!actionReducerMap || !actionReducerMap.initializer) {
+    return new NoopChange();
+  }
+
+  let node = actionReducerMap.initializer;
+
+  const keyInsert = `${strings.camelize(name)}: ${strings.camelize(name)}Reducer,`;
+
+  const expr = node as any;
+  let position;
+  let toInsert;
+
+  if (expr.properties.length === 0) {
+    position = expr.getEnd() - 1;
+    toInsert = `  ${keyInsert}\n`;
+  } else {
+    node = expr.properties[expr.properties.length - 1];
+    position = node.getEnd() + 1;
+    // Get the indentation of the last element, if any.
+    const text = node.getFullText(source);
+    const matches = text.match(/^\r?\n+(\s*)/);
+
+    if (matches.length > 0) {
+      toInsert = `\n${matches![1]}${keyInsert}`;
+    } else {
+      toInsert = `\n${keyInsert}`;
+    }
+  }
+
+  return new InsertChange(reducersPath, position, toInsert);
 }
