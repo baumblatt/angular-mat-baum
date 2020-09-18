@@ -15,8 +15,6 @@ import {InsertChange as InsertChange2, ReplaceChange as ReplaceChange2} from "..
 export const debug = (options: {verbose?: boolean}, message: string) => {
   if (options.verbose) {
     console.log(message);
-  } else {
-    console.log(message);
   }
 }
 
