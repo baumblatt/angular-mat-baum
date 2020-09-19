@@ -2,6 +2,12 @@
 
 A strongly opinionated Angular Application Schematic using NgRx, Angular Flex Layout and Angular Material.
 
+# The Showroom
+
+See the result of this project in action:
+- The application on [https://angular-mat-baum.web.app](https://angular-mat-baum.web.app)
+- The source code on [https://github.com/baumblatt/angular-mat-baum-showroom](https://github.com/baumblatt/angular-mat-baum-showroom)
+
 # Getting started with the Baum schematics
 
 Create a new Angular project without an application and add `angular-mat-baum` to generate your `Baum App`.
@@ -22,7 +28,7 @@ cd fruits
 ng g angular-mat-baum:slice candies
 ng g angular-mat-baum:component containers/juices --type container
 ng g angular-mat-baum:component containers/cadies --type container
-ng g angular-mat-baum:component components/juices --type dialog
+ng g angular-mat-baum:component components/juices-detail --type dialog
 ng g angular-mat-baum:component components/cadies-detail --type bottom-sheet
 ```
 
