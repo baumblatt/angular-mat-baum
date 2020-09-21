@@ -15,7 +15,7 @@ import {addMethod, addMixin, debug, getAngularSchematicsDefaults, makeChanges} f
 import {Path, strings} from "@angular-devkit/core";
 import {buildRelativePath, findModuleFromOptions} from "@schematics/angular/utility/find-module";
 import {parseName} from "@schematics/angular/utility/parse-name";
-import {insertImport} from "@schematics/angular/utility/ast-utils";
+import {addRouteDeclarationToModule, insertImport} from "@schematics/angular/utility/ast-utils";
 import {classify} from "@angular-devkit/core/src/utils/strings";
 import {ReplaceChange} from "@schematics/angular/utility/change";
 import ts = require("typescript");
@@ -42,6 +42,7 @@ export function factory(_options: Component): Rule {
     _options.selector = _options.selector || buildSelector(_options, project && project.prefix || '');
 
     const name = strings.dasherize(_options.name);
+    const componentPath = `${_options.path}/${name}/${name}.${_options.type}.ts`
 
     debug(_options, 'Creating the component');
 
@@ -51,6 +52,7 @@ export function factory(_options: Component): Rule {
         ..._options,
         ...getAngularSchematicsDefaults(_tree, _options.project as string)['@schematics/angular:component'],
         changeDetection: 'OnPush',
+        style: 'scss',
         displayBlock: false,
         inlineStyle: false,
         inlineTemplate: false,
@@ -67,7 +69,7 @@ export function factory(_options: Component): Rule {
       // add style
       (_tree) => {
         debug(_options, 'Reference the component on module theme scss');
-        const parentStylePath = `${modulePath.split('.').reverse().pop()}.styles.scss`;
+        const parentStylePath = `${moduleDir}/${moduleName}.styles.scss`;
 
         const changes = addMixin(
           _tree,
@@ -78,12 +80,45 @@ export function factory(_options: Component): Rule {
 
         return makeChanges(_tree, parentStylePath, changes);
       },
+      // add router
+      (_tree) => {
+        if ((_options.type === 'container' || _options.type === 'component') && _options.route) {
+          debug(_options, 'Add route to the component on module theme router');
+
+          const componentDeclaration = classify(`${name}-${_options.type}`);
+          const moduleRouterPath = `${moduleDir}/${moduleName}-routing.module.ts`;
+
+          const source = ts.createSourceFile(
+            moduleRouterPath,
+            _tree.read(moduleRouterPath.substring(1))?.toString() || '',
+            ts.ScriptTarget.Latest, true
+          );
+
+          const relativePath = buildRelativePath(
+            moduleRouterPath,
+            componentPath.substring(0, componentPath.indexOf('.ts'))
+          );
+
+          const changes = [insertImport(
+            source,
+            moduleRouterPath,
+            componentDeclaration,
+            relativePath
+          )];
+
+          changes.push(addRouteDeclarationToModule(
+            source,
+            moduleRouterPath,
+            `{path: '${_options.route}', component: ${componentDeclaration}}`,
+          ));
+
+          return makeChanges(_tree, moduleRouterPath, changes);
+        }
+      },
       // the container specific steps
       (_tree) => {
         if (_options.type === 'container') {
           debug(_options, 'Update container components');
-
-          const componentPath = `${_options.path}/${name}/${name}.${_options.type}.ts`;
 
           const source = ts.createSourceFile(
             componentPath,
@@ -122,8 +157,6 @@ export function factory(_options: Component): Rule {
         if (_options.type === 'dialog') {
           debug(_options, 'Update dialog components');
 
-          const componentPath = `${_options.path}/${name}/${name}.${_options.type}.ts`;
-
           const source = ts.createSourceFile(
             componentPath,
             _tree.read(componentPath.substring(1))?.toString() || '',
@@ -161,8 +194,6 @@ export function factory(_options: Component): Rule {
       (_tree) => {
         if (_options.type === 'bottom-sheet') {
           debug(_options, 'Update bottom-sheet components');
-
-          const componentPath = `${_options.path}/${name}/${name}.${_options.type}.ts`;
 
           const source = ts.createSourceFile(
             componentPath,

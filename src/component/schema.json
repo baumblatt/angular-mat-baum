@@ -86,6 +86,10 @@
       "description": "When true, the declaring NgModule exports this component.",
       "x-user-analytics": 19
     },
+    "route": {
+      "type": "string",
+      "description": "The route path for the component in the feature module router."
+    },
     "lintFix": {
       "type": "boolean",
       "default": false,
