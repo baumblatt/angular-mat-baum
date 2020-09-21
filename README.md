@@ -23,13 +23,13 @@ Go further with your `Baum App`, create a future `module`, a second `slice`, two
 
 ```
 cd projects/my-baum-app/src/app
-ng g angular-mat-baum:module fruits --slice juices
+ng g angular-mat-baum:module fruits --slice=juices
 cd fruits
 ng g angular-mat-baum:slice candies
-ng g angular-mat-baum:component containers/juices --type container
-ng g angular-mat-baum:component containers/cadies --type container
-ng g angular-mat-baum:component components/juices-detail --type dialog
-ng g angular-mat-baum:component components/cadies-detail --type bottom-sheet
+ng g angular-mat-baum:component containers/juices --type=container --route=juices
+ng g angular-mat-baum:component containers/cadies --type=container --route=candies
+ng g angular-mat-baum:component components/juices-detail --type=dialog
+ng g angular-mat-baum:component components/cadies-detail --type=bottom-sheet
 ```
 
 ### Compatibility Table
@@ -82,6 +82,8 @@ The component could be a container that will have the module store injected on y
 an Angular Material dialog, an Angular Material bottom sheet or just a simple component. All type of component
 will have an Angular Material scss theme imported under correspond module.
 
+Optionally a route to the component could be created with `route` options, available for types component ou container.
+
 #### Flavors:
 
 | Option    | Description                                                 |
@@ -97,6 +99,7 @@ will have an Angular Material scss theme imported under correspond module.
 | skipSelector| Specifies if the component should have a selector or not. |
 | module    | The declaring NgModule.                                     |
 | export    | When true, the declaring NgModule exports this component.   |
+| route     | The route path for the component in the feature module router.|
 | lintFix   | When true, applies lint fixes after generating the component.|
 
 how to use:
