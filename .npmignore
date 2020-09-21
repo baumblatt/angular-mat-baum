@@ -3,6 +3,8 @@
 !src/**/files/**/*.ts
 !*.d.ts
 
+# IDEs
+.idea
 
 # npm pack file
 angular-mat-baum-*.tgz
