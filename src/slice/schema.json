@@ -27,6 +27,10 @@
       "description": "The path at which to create the NgModule, relative to the workspace root.",
       "visible": false
     },
+    "entity": {
+      "type": "string",
+      "description": "The state of the slice will implemented using ngrx@entity. Could be the entity name or interface path."
+    },
     "verbose":  {
       "description": "Display additional details about internal operations during execution.",
       "type": "boolean",

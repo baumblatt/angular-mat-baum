@@ -25,7 +25,7 @@ Go further with your `Baum App`, create a future `module`, a second `slice`, two
 cd projects/my-baum-app/src/app
 ng g angular-mat-baum:module fruits --slice=juices
 cd fruits
-ng g angular-mat-baum:slice candies
+ng g angular-mat-baum:slice candies --entity=candy
 ng g angular-mat-baum:component containers/juices --type=container --route=juices
 ng g angular-mat-baum:component containers/cadies --type=container --route=candies
 ng g angular-mat-baum:component components/juices-detail --type=dialog
@@ -149,5 +149,6 @@ ng g angular-mat-baum:slice [slice-name] [--name slice-name]
 | Option    | Description                                                 |
 |:----------|:------------------------------------------------------------|
 | name      | The name of the slice of the store feature.                 |
+| entity    | The state of the slice will implemented using ngrx@entity. Could be the entity name or interface path. |                 |
 | path      | The path used to find the NgModule, relative to the workspace root. |
 | project   | The name of the project.                                    |

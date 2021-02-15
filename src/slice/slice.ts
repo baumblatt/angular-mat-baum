@@ -91,7 +91,29 @@ export function factory(_options: Slice): Rule {
         changes.push(addReducerToStateInterface(source, featureReducePath, name));
         changes.push(addReducerToActionReducerMap(source, featureReducePath, name));
 
-        return makeChanges(tree, featureReducePath, changes)
+        return makeChanges(tree, featureReducePath, changes);
+      },
+      (tree) => {
+        if (_options.entity) {
+          debug(_options, 'Implement the entity state on slice reduce.');
+          const sliceReducerPath = `${_options.path}/store/reducers/${name}-reducers.ts`
+
+          const source = ts.createSourceFile(
+            sliceReducerPath,
+            // @ts-ignore
+            tree.read(sliceReducerPath).toString(),
+            ts.ScriptTarget.Latest, true
+          );
+
+          const changes = addImportToModule(
+            source,
+            modulePath,
+            `EntityState, EntityAdapter, createEntityAdapter`,
+            `@ngrx/entity`
+          );
+
+          return makeChanges(tree, sliceReducerPath, changes)
+        }
       }
     ]);
   }
