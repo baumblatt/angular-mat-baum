@@ -10,7 +10,7 @@ import {
   url
 } from "@angular-devkit/schematics";
 import {Path, strings} from "@angular-devkit/core";
-import * as ts from "typescript";
+import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 import {createDefaultPath} from "@schematics/angular/utility/workspace";
 import {findModuleFromOptions} from "@schematics/angular/utility/find-module";
 import {addReducerToActionReducerMap, addReducerToStateInterface, debug, makeChanges} from "../utils/utils";

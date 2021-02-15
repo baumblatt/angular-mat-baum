@@ -12,7 +12,7 @@ import {
 } from "@angular-devkit/schematics";
 import {strings} from "@angular-devkit/core";
 import {RunSchematicTask} from "@angular-devkit/schematics/tasks";
-import * as ts from "typescript";
+import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 import {createDefaultPath} from "@schematics/angular/utility/workspace";
 import {Change, ReplaceChange} from "@schematics/angular/utility/change";
 import {

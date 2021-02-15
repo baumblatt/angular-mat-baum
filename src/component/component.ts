@@ -18,7 +18,7 @@ import {parseName} from "@schematics/angular/utility/parse-name";
 import {addRouteDeclarationToModule, insertImport} from "@schematics/angular/utility/ast-utils";
 import {classify} from "@angular-devkit/core/src/utils/strings";
 import {ReplaceChange} from "@schematics/angular/utility/change";
-import ts = require("typescript");
+import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 
 export function factory(_options: Component): Rule {
 

@@ -1,6 +1,6 @@
 export function createCustomTheme (name = 'app') {
   return `
-// Custom Theming for Angular Material
+// Custom Theming for Angular Material by angular-mat-baum
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.
@@ -24,8 +24,20 @@ $${name}-dark-accent: mat-palette($mat-blue-grey, A200, A100, A400);
 $${name}-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$${name}-light-theme: mat-light-theme($${name}-light-primary, $${name}-light-accent, $${name}-warn);
-$${name}-dark-theme: mat-dark-theme($${name}-dark-primary, $${name}-dark-accent, $${name}-warn);
+$${name}-light-theme: mat-light-theme((
+  color: (
+    primary: $${name}-light-primary,
+    accent: $${name}-light-accent,
+    warn: $${name}-warn,
+  )
+));
+$${name}-dark-theme: mat-dark-theme((
+  color: (
+    primary: $${name}-dark-primary,
+    accent: $${name}-dark-accent,
+    warn: $${name}-warn,
+  )
+));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component

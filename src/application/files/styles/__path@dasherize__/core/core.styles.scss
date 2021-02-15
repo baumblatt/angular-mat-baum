@@ -3,7 +3,7 @@
 @import "./containers/layout/layout.container.theme";
 
 @mixin core-theme($theme) {
-    @include app-loading-dialog-theme($theme);
-    @include app-home-container-theme($theme);
-    @include app-layout-container-theme($theme);
+    @include <%= prefix %>-loading-dialog-theme($theme);
+    @include <%= prefix %>-home-container-theme($theme);
+    @include <%= prefix %>-layout-container-theme($theme);
 }

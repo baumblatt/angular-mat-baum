@@ -1,12 +1,12 @@
 // Import library functions for theme creation.
 @import '~@angular/material/theming';
 
-@mixin app-loading-dialog-theme($theme) {
+@mixin <%= prefix %>-loading-dialog-theme($theme) {
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
   $primary: map-get($theme, primary);
 
-  app-loading {
+  <%= prefix %>-loading {
     div.loading {
 
     }

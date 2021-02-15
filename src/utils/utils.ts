@@ -9,7 +9,7 @@ import {
 import {buildRelativePath} from "@schematics/angular/utility/find-module";
 import {strings} from "@angular-devkit/core";
 import {InsertChange as InsertChange2, ReplaceChange as ReplaceChange2} from "../schematics-core";
-import * as ts from "typescript";
+import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 import {findNodes, getRouterModuleDeclaration} from "@schematics/angular/utility/ast-utils";
 
 

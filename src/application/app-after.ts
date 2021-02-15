@@ -12,10 +12,10 @@ import {
 	url
 } from '@angular-devkit/schematics';
 import {createCustomTheme} from "./theme";
-import * as ts from 'typescript';
 import {debug, getAngularSchematicsDefaults, makeChanges} from "../utils/utils";
 import {addImportToModule, insertImport} from "@schematics/angular/utility/ast-utils";
 import {ReplaceChange} from "@schematics/angular/utility/change";
+import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 
 export function factory(_options: App): Rule {
 	return (_tree: Tree, _context: SchematicContext) => {
@@ -93,9 +93,6 @@ export function factory(_options: App): Rule {
 					...strings,
 					path: `projects/${name}/src/app/core`
 				})]), MergeStrategy.AllowCreationConflict);
-			},
-			(tree) => {
-				tree.overwrite(`projects/${name}/src/styles.scss`, createCustomTheme(strings.dasherize(name)))
 			},
 			() => {
 				debug(_options, 'Creating the store of App and Core modules');
@@ -211,7 +208,11 @@ export function factory(_options: App): Rule {
 				);
 
 				return makeChanges(tree, index, [change]);
-			}
+			},
+			(tree) => {
+				debug(_options, 'Update the material theme scss.');
+				tree.overwrite(`projects/${name}/src/styles.scss`, createCustomTheme(strings.dasherize(name)));
+			},
 		])
 	}
 }
