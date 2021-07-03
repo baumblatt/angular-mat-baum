@@ -16,13 +16,14 @@ import {debug} from "../utils/utils";
 export function factory(_options: App): Rule {
 	return (_tree: Tree, _context: SchematicContext) => {
 
-		const {name} = _options;
+		const {name, verbose, ...options} = _options;
 
 		debug(_options, 'Create the application and core module');
 
 		return chain([
 			externalSchematic('@schematics/angular', 'application', {
-				..._options,
+				...options,
+				name,
 				routing: true,
 				style: 'scss',
 				inlineStyle: false,

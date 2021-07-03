@@ -15,7 +15,7 @@ export class MessagesEffects {
     onInfo$ = createEffect(() => this.actions$.pipe(
       ofType(onInfo),
       tap(({message}) => {
-        this.matSnackBar.open(message, null, {
+        this.matSnackBar.open(message, undefined, {
             duration: 3000,
             verticalPosition: 'bottom',
             horizontalPosition: 'center',
@@ -27,7 +27,7 @@ export class MessagesEffects {
     onAlert$ = createEffect(() => this.actions$.pipe(
       ofType(onAlert),
       tap(({message}) => {
-        this.matSnackBar.open(message, null, {
+        this.matSnackBar.open(message, undefined, {
             duration: 3000,
             verticalPosition: 'bottom',
             horizontalPosition: 'center',
@@ -38,7 +38,7 @@ export class MessagesEffects {
 
     onWarn$ = createEffect(() => this.actions$.pipe(
       ofType(onWarn),
-      tap(({message}) => this.matSnackBar.open(message, null, {
+      tap(({message}) => this.matSnackBar.open(message, undefined, {
         duration: 3000,
         verticalPosition: 'bottom',
         horizontalPosition: 'center',
@@ -63,7 +63,7 @@ export class MessagesEffects {
       withLatestFrom(this.store.pipe(select(getLoadingDialogId))),
       filter(([, dialogId]) => !!dialogId),
       tap(([, dialogId]) => {
-        this.dialog.getDialogById(dialogId).close();
+        this.dialog.getDialogById(dialogId ?? '')?.close();
       }),
       map(() => hideLoadingSuccess()),
     ));

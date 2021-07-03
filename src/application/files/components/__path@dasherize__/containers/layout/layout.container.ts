@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { CoreState } from "../../store/reducers/feature.reducer";
 import { select, Store } from "@ngrx/store";
@@ -23,12 +23,12 @@ export class LayoutContainer implements OnInit {
    * Reference to the sidenav component.
    */
   @ViewChild('sidenav', {static: false})
-  sidenav: MatSidenav;
+  sidenav?: MatSidenav;
 
   /**
    * Observable of the theme user preference.
    */
-  theme$: Observable<string>;
+  theme$: Observable<'light' | 'dark' | undefined> = EMPTY;
 
   /**
    * Flag to indicate if the sidenav is opened.
