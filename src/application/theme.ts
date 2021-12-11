@@ -1,6 +1,6 @@
 export function createCustomTheme (name = 'app') {
   return `
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 // Custom Theming for Angular Material by angular-mat-baum
 // For more information: https://material.angular.io/guide/theming
 // Plus imports for other components in your app.

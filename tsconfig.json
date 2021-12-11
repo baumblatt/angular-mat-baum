@@ -1,15 +1,7 @@
 {
 	"compilerOptions": {
 		"baseUrl": "tsconfig",
-		"lib": [
-			"es2018",
-			"dom"
-		],
-		"declaration": true,
-		"module": "commonjs",
-		"moduleResolution": "node",
 		"noEmitOnError": true,
-		"noFallthroughCasesInSwitch": true,
 		"noImplicitAny": true,
 		"noImplicitThis": true,
 		"noUnusedParameters": false,
@@ -17,12 +9,22 @@
 		"rootDir": "src/",
 		"skipDefaultLibCheck": true,
 		"skipLibCheck": true,
-		"sourceMap": true,
 		"strictNullChecks": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"noImplicitReturns": false,
+		"noFallthroughCasesInSwitch": true,
+		"sourceMap": true,
+		"declaration": false,
+		"downlevelIteration": true,
+		"experimentalDecorators": true,
+		"moduleResolution": "node",
+		"importHelpers": true,
 		"target": "es6",
-		"types": [
-			"jasmine",
-			"node"
+		"module": "commonjs",
+		"lib": [
+			"es2020",
+			"dom"
 		]
 	},
 	"include": [

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "app",
+  "$id": "app",
   "title": "An alternative application schematic",
   "type": "object",
   "description": "Initialise a new application in Baumblatt's opinionated way.",

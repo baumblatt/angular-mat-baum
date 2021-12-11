@@ -1,5 +1,5 @@
 // Import all the tools needed to customize the theme and extract parts of it
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 
 @mixin material-ext-theme($theme) {
 	$primary: map-get($theme, primary);

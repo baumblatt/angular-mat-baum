@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "module",
+  "$id": "module",
   "title": "An alternative module schematic",
   "type": "object",
   "description": "Creates a new feature NgModule definition in the given or default project in Baumblatt's opinionated way.",

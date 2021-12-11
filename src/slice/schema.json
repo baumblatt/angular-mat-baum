@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "slice",
+  "$id": "slice",
   "title": "A schematic to create a new slice in the store feature.",
   "type": "object",
   "description": "Creates a new Store slice in angular-mat-baum opinionated style.",

@@ -1,4 +1,4 @@
-import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
+import * as ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 import * as stringUtils from './strings';
 import { InsertChange, Change, NoopChange } from './change';
 import { Tree, SchematicsException, Rule } from '@angular-devkit/schematics';
@@ -112,8 +112,8 @@ export function addReducerToStateInterface(
     const text = node.getFullText(source);
     const matches = text.match(/^\r?\n+(\s*)/);
 
-    if (matches!.length > 0) {
-      toInsert = `${matches![1]}${keyInsert}\n`;
+    if (matches && matches.length > 0) {
+      toInsert = `${matches[1]}${keyInsert}\n`;
     } else {
       toInsert = `\n${keyInsert}`;
     }
@@ -179,8 +179,8 @@ export function addReducerToActionReducerMap(
     const text = node.getFullText(source);
     const matches = text.match(/^\r?\n+(\s*)/);
 
-    if (matches.length > 0) {
-      toInsert = `\n${matches![1]}${keyInsert}`;
+    if (matches && matches.length > 0) {
+      toInsert = `\n${matches[1]}${keyInsert}`;
     } else {
       toInsert = `\n${keyInsert}`;
     }
@@ -267,4 +267,10 @@ export function omit<T extends { [key: string]: any }>(
   return Object.keys(object)
     .filter((key) => key !== keyToRemove)
     .reduce((result, key) => Object.assign(result, { [key]: object[key] }), {});
+}
+
+export function getPrefix(options: { prefix?: string; creators?: boolean }) {
+  return options.creators
+    ? stringUtils.camelize(options.prefix || 'load')
+    : stringUtils.capitalize(options.prefix || 'load');
 }

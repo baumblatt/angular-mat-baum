@@ -10,8 +10,6 @@ import {
   pluralize,
 } from './utility/strings';
 
-export { isIvyEnabled } from './utility/angular-utils';
-
 export {
   findNodes,
   getSourceNodes,
@@ -23,6 +21,7 @@ export {
   addDeclarationToModule,
   addExportToModule,
   addImportToModule,
+  addProviderToComponent,
   addProviderToModule,
   replaceImport,
   containsProperty,
@@ -42,6 +41,8 @@ export {
 
 export { AppConfig, getWorkspace, getWorkspacePath } from './utility/config';
 
+export { findComponentFromOptions } from './utility/find-component';
+
 export {
   findModule,
   findModuleFromOptions,
@@ -57,6 +58,7 @@ export {
   addReducerImportToNgModule,
   addReducerToActionReducerMap,
   omit,
+  getPrefix,
 } from './utility/ngrx-utils';
 
 export { getProjectPath, getProject, isLib } from './utility/project';

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "component",
+  "$id": "component",
   "title": "An alternative Component Options Schema",
   "type": "object",
   "description": "Creates a new component definition in the given or default project.",

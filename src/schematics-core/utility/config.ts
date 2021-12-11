@@ -1,5 +1,4 @@
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
-import {WorkspaceSchema} from "@schematics/angular/utility/workspace-models";
 
 // The interfaces below are generated from the Angular CLI configuration schema
 // https://github.com/angular/angular-cli/blob/master/packages/@angular/cli/lib/config/schema.json
@@ -91,7 +90,7 @@ export interface AppConfig {
     | string
     | {
         input?: string;
-        [name: string]: any; // tslint:disable-line:no-any
+        [name: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
       }
   )[];
   /**
@@ -110,7 +109,7 @@ export interface AppConfig {
     | string
     | {
         input: string;
-        [name: string]: any; // tslint:disable-line:no-any
+        [name: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
       }
   )[];
   /**
@@ -121,7 +120,7 @@ export interface AppConfig {
    * Name and corresponding file for environment config.
    */
   environments?: {
-    [name: string]: any; // tslint:disable-line:no-any
+    [name: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
   appShell?: {
     app: string;
@@ -130,13 +129,13 @@ export interface AppConfig {
 }
 
 export function getWorkspacePath(host: Tree): string {
-  const possibleFiles = ['/angular.json', '/.angular.json'];
+  const possibleFiles = ['/angular.json', '/.angular.json', '/workspace.json'];
   const path = possibleFiles.filter((path) => host.exists(path))[0];
 
   return path;
 }
 
-export function getWorkspace(host: Tree): WorkspaceSchema {
+export function getWorkspace(host: Tree) {
   const path = getWorkspacePath(host);
   const configBuffer = host.read(path);
   if (configBuffer === null) {

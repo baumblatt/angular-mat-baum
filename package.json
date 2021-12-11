@@ -1,6 +1,6 @@
 {
   "name": "angular-mat-baum",
-  "version": "12.0.0-beta.19",
+  "version": "13.0.0-beta.19",
   "description": "A strongly opinionated Angular Application Schematic using NgRx, Angular Flex Layout and Angular Material.",
   "scripts": {
     "schema-app": "npx -p dtsgenerator dtsgen src/application/schema.json -o src/application/schema.d.ts",
@@ -9,7 +9,7 @@
     "schema-slice": "npx -p dtsgenerator dtsgen src/slice/schema.json -o src/slice/schema.d.ts",
     "schema": "npm run schema-app && npm run schema-component && npm run schema-module && npm run schema-slice",
     "build": "tsc -p tsconfig.json",
-    "pack": "npm pack && mv angular-mat-baum-1.*.tgz angular-mat-baum-nightly.tgz"
+    "pack": "npm pack && mv angular-mat-baum-12.*.tgz angular-mat-baum-nightly.tgz"
   },
   "keywords": [
     "schematics",
@@ -20,17 +20,17 @@
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-devkit/core": "^12.1.1",
-    "@angular-devkit/schematics": "^12.1.1",
-    "@ngrx/schematics": "^12.2.0",
-    "@schematics/angular": "^12.1.1"
+    "@angular-devkit/core": "^13.1.1",
+    "@angular-devkit/schematics": "^13.1.1",
+    "@ngrx/schematics": "^13.0.2",
+    "@schematics/angular": "^13.1.1"
   },
   "devDependencies": {
-    "@angular-devkit/schematics-cli": "~12.1.1",
-    "@types/jasmine": "~3.6.0",
+    "@angular-devkit/schematics-cli": "~13.1.1",
+    "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
-    "jasmine-core": "~3.7.0",
-    "typescript": "~4.3.2"
+    "jasmine-core": "~3.10.0",
+    "typescript": "~4.5.2"
   },
   "repository": {
     "type": "git",
