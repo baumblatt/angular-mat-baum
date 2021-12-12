@@ -9,7 +9,7 @@
     "schema-slice": "npx -p dtsgenerator dtsgen src/slice/schema.json -o src/slice/schema.d.ts",
     "schema": "npm run schema-app && npm run schema-component && npm run schema-module && npm run schema-slice",
     "build": "tsc -p tsconfig.json",
-    "pack": "npm pack && mv angular-mat-baum-12.*.tgz angular-mat-baum-nightly.tgz"
+    "pack": "npm pack && mv angular-mat-baum-13.*.tgz angular-mat-baum-nightly.tgz"
   },
   "keywords": [
     "schematics",

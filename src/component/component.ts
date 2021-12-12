@@ -49,13 +49,23 @@ export function factory(_options: Component): Rule {
     return chain([
       // create the component using original Angular Schematics
       externalSchematic('@schematics/angular', 'component', {
-        ..._options,
         ...getAngularSchematicsDefaults(_tree, _options.project as string)['@schematics/angular:component'],
         changeDetection: 'OnPush',
-        style: 'scss',
+        export: _options.export,
         displayBlock: false,
-        inlineStyle: false,
         inlineTemplate: false,
+        inlineStyle: false,
+        module: _options.module,
+        name: _options.name,
+        path: _options.path,
+        prefix: _options.prefix,
+        project: _options.project,
+        selector: _options.selector,
+        skipSelector: _options.skipSelector,
+        skipTests: _options.skipTests,
+        style: 'scss',
+        type: _options.type,
+        viewEncapsulation: _options.viewEncapsulation
       }),
       // insert template files based on type
       () => {
