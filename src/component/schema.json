@@ -90,12 +90,6 @@
       "type": "string",
       "description": "The route path for the component in the feature module router."
     },
-    "lintFix": {
-      "type": "boolean",
-      "default": false,
-      "description": "When true, applies lint fixes after generating the component.",
-      "x-user-analytics": 15
-    },
     "verbose":  {
       "description": "Display additional details about internal operations during execution.",
       "type": "boolean",

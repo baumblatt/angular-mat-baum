@@ -27,12 +27,6 @@
         "$source": "projectName"
       }
     },
-    "lintFix": {
-      "type": "boolean",
-      "default": false,
-      "description": "When true, applies lint fixes after generating the module.",
-      "x-user-analytics": 15
-    },
     "slice": {
       "type": "string",
       "description": "When present, create a slice of the Store with this name."

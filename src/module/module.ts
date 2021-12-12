@@ -34,12 +34,13 @@ export function factory(_options: Module): Rule {
     const moduleRouterPath = `${_options.path}/${name}/${name}-routing.module.ts`;
 
     debug(_options, 'Creating the feature module');
+    const {slice, verbose, ...coreOptions} = _options
 
     return chain([
 
       // create the module using original Angular Schematics
       externalSchematic('@schematics/angular', 'module', {
-        ..._options,
+        ...coreOptions,
         ...getAngularSchematicsDefaults(_tree, _options.project as string)['@schematics/angular:module'],
         route: undefined,
         module: undefined,

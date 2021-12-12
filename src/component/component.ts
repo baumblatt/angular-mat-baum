@@ -45,27 +45,18 @@ export function factory(_options: Component): Rule {
     const componentPath = `${_options.path}/${name}/${name}.${_options.type}.ts`
 
     debug(_options, 'Creating the component');
+    const {verbose, route, ...coreOptions} = _options;
 
     return chain([
       // create the component using original Angular Schematics
       externalSchematic('@schematics/angular', 'component', {
         ...getAngularSchematicsDefaults(_tree, _options.project as string)['@schematics/angular:component'],
+        ...coreOptions,
         changeDetection: 'OnPush',
-        export: _options.export,
         displayBlock: false,
         inlineTemplate: false,
         inlineStyle: false,
-        module: _options.module,
-        name: _options.name,
-        path: _options.path,
-        prefix: _options.prefix,
-        project: _options.project,
-        selector: _options.selector,
-        skipSelector: _options.skipSelector,
-        skipTests: _options.skipTests,
         style: 'scss',
-        type: _options.type,
-        viewEncapsulation: _options.viewEncapsulation
       }),
       // insert template files based on type
       () => {
