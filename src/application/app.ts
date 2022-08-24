@@ -60,7 +60,7 @@ export function factory(_options: App): Rule {
 
 				debug(_options, 'Installing dependencies.');
 				const installTaskId = context.addTask(new NodePackageInstallTask({
-					packageName: '@angular/cdk @angular/material @angular/flex-layout @ngrx/store @ngrx/effects @ngrx/entity @ngrx/router-store @ngrx/store-devtools'
+					packageName: '@angular/cdk@13.x @angular/material@13.x @angular/flex-layout@13.0.0-beta.38 @ngrx/store@13.x @ngrx/effects@13.x @ngrx/entity@13.x @ngrx/router-store@13.x @ngrx/store-devtools@13.x'
 				}));
 				context.addTask(new RunSchematicTask('app-after', _options), [installTaskId]);
 			}

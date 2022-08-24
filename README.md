@@ -25,7 +25,7 @@ Go further with your `Baum App`, create a future `module`, a second `slice`, two
 cd projects/my-baum-app/src/app
 ng g angular-mat-baum:module fruits --slice=juices
 cd fruits
-ng g angular-mat-baum:slice candies --entity=candy
+ng g angular-mat-baum:slice candies
 ng g angular-mat-baum:component containers/juices --type=container --route=juices
 ng g angular-mat-baum:component containers/cadies --type=container --route=candies
 ng g angular-mat-baum:component components/juices-detail --type=dialog
@@ -34,13 +34,13 @@ ng g angular-mat-baum:component components/cadies-detail --type=bottom-sheet
 
 ### Compatibility Table
 
-| CLI    | Typescript | Baum               |
-|:-------|:----------:|:------------------:|
-| 10.0.x |  ~3.9.5    | 1.0.0-beta.1-13    |         
-| 10.1.x |  ~4.0.2    | 1.0.0-beta.14-17   |
-| 11.x   |  ~4.0.2    | 1.0.0-beta.18      |
-| 12.x   |  ~4.3.2    | 12.0.0-beta.19     |
-| 13.x   |  ~4.5.2    | 12.0.0-beta.20-x     |
+| CLI    | Typescript |       Baum       |
+|:-------|:----------:|:----------------:|
+| 10.0.x |   ~3.9.5   | 1.0.0-beta.1-13  |         
+| 10.1.x |   ~4.0.2   | 1.0.0-beta.14-17 |
+| 11.x   |   ~4.0.2   |  1.0.0-beta.18   |
+| 12.x   |   ~4.3.2   |  12.0.0-beta.19  |
+| 13.x   |   ~4.5.2   | 13.0.0-beta.20-x |
 
 > Please, choose the Angular Baum version as compatibility table above.
 
@@ -71,11 +71,11 @@ ng g angular-mat-baum:app [app-name]
 
 #### Flavors:
 
-| Option    | Description                                                 |
-|:----------|:------------------------------------------------------------|
-| name      | The name of the your application.                           |
-| prefix    | A prefix to apply to generated selectors.                   |
-| skipTests | When true, does not create `spec.ts` test files for the app.|
+| Option    | Description                                                  |
+|:----------|:-------------------------------------------------------------|
+| name      | The name of the your application.                            |
+| prefix    | A prefix to apply to generated selectors.                    |
+| skipTests | When true, does not create `spec.ts` test files for the app. |
 
 ### Component
 
@@ -89,21 +89,21 @@ Optionally a route to the component could be created with `route` options, avail
 
 #### Flavors:
 
-| Option    | Description                                                 |
-|:----------|:------------------------------------------------------------|
-| name      | The name of the component.                                  |
-| path      | The path at which to create the component file, relative to the current workspace. Default is a folder with the same name as the component in the project root..                   |
-| project   | The name of the project.                                    |
-| viewEncapsulation   | The view encapsulation strategy to use in the new component. |
-| prefix    | The prefix to apply to the generated component selector.    |
-| type      | Define each kind of component to be created, use `component`, `container`, `dialog` or `bottom-sheet`. |
-| skipTests | When true, does not create `spec.ts` test files for the app.|
-| selector  | The HTML selector to use for this component.                |
-| skipSelector| Specifies if the component should have a selector or not. |
-| module    | The declaring NgModule.                                     |
-| export    | When true, the declaring NgModule exports this component.   |
-| route     | The route path for the component in the feature module router.|
-| lintFix   | When true, applies lint fixes after generating the component.|
+| Option             | Description                                                                                                                                                      |
+|:-------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name               | The name of the component.                                                                                                                                       |
+| path               | The path at which to create the component file, relative to the current workspace. Default is a folder with the same name as the component in the project root.. |
+| project            | The name of the project.                                                                                                                                         |
+| viewEncapsulation  | The view encapsulation strategy to use in the new component.                                                                                                     |
+| prefix             | The prefix to apply to the generated component selector.                                                                                                         |
+| type               | Define each kind of component to be created, use `component`, `container`, `dialog` or `bottom-sheet`.                                                           |
+| skipTests          | When true, does not create `spec.ts` test files for the app.                                                                                                     |
+| selector           | The HTML selector to use for this component.                                                                                                                     |
+| skipSelector       | Specifies if the component should have a selector or not.                                                                                                        |
+| module             | The declaring NgModule.                                                                                                                                          |
+| export             | When true, the declaring NgModule exports this component.                                                                                                        |
+| route              | The route path for the component in the feature module router.                                                                                                   |
+| lintFix            | When true, applies lint fixes after generating the component.                                                                                                    |
 
 how to use:
 ```
@@ -127,13 +127,13 @@ ng g angular-mat-baum:module module-name
 
 #### Flavors:
 
-| Option    | Description                                                 |
-|:----------|:------------------------------------------------------------|
-| name      | The name of the NgModule.                                   |
+| Option    | Description                                                               |
+|:----------|:--------------------------------------------------------------------------|
+| name      | The name of the NgModule.                                                 |
 | path      | The path at which to create the NgModule, relative to the workspace root. |
-| project   | The name of the project.                                    |
-| lintFix   | When true, applies lint fixes after generating the module.  |
-| slice     | When present, create a slice of the Store with this name.   |
+| project   | The name of the project.                                                  |
+| lintFix   | When true, applies lint fixes after generating the module.                |
+| slice     | When present, create a slice of the Store with this name.                 |
 
 ### Slice
 
@@ -149,9 +149,9 @@ ng g angular-mat-baum:slice [slice-name] [--name slice-name]
 
 #### Flavors:
 
-| Option    | Description                                                 |
-|:----------|:------------------------------------------------------------|
-| name      | The name of the slice of the store feature.                 |
-| entity    | The state of the slice will implemented using ngrx@entity. Could be the entity name or interface path. |                 |
-| path      | The path used to find the NgModule, relative to the workspace root. |
-| project   | The name of the project.                                    |
+| Option    | Description                                                                                            |
+|:----------|:-------------------------------------------------------------------------------------------------------|
+| name      | The name of the slice of the store feature.                                                            |
+| entity    | The state of the slice will implemented using ngrx@entity. Could be the entity name or interface path. |
+| path      | The path used to find the NgModule, relative to the workspace root.                                    |
+| project   | The name of the project.                                                                               |
