@@ -27,7 +27,7 @@ ng g angular-mat-baum:module fruits --slice=juices
 cd fruits
 ng g angular-mat-baum:slice candies
 ng g angular-mat-baum:component containers/juices --type=container --route=juices
-ng g angular-mat-baum:component containers/cadies --type=container --route=candies
+ng g angular-mat-baum:component containers/candies --type=container --route=candies
 ng g angular-mat-baum:component components/juices-detail --type=dialog
 ng g angular-mat-baum:component components/cadies-detail --type=bottom-sheet
 ```
