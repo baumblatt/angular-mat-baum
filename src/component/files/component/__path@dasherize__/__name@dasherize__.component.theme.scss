@@ -1,3 +1,6 @@
+// Import library functions for theme creation.
+@use '@angular/material' as mat;
+
 @mixin <%= selector %>-component-theme($theme) {
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
