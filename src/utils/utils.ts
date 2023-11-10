@@ -14,7 +14,6 @@ import {findNodes, getRouterModuleDeclaration} from "@schematics/angular/utility
 
 
 export const debug = (options: {verbose?: boolean}, message: string) => {
-  console.log(message);
   if (options.verbose) {
     console.log(message);
   }
