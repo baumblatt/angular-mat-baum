@@ -25,7 +25,10 @@
       "type": "string",
       "format": "path",
       "description": "The path at which to create the NgModule, relative to the workspace root.",
-      "visible": false
+      "visible": false,
+      "$default": {
+        "$source": "workingDirectory"
+      }
     },
     "entity": {
       "type": "string",

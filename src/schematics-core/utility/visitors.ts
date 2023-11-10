@@ -169,12 +169,14 @@ export function visitDecorator(
 
     if (
       !classDeclarationNode.decorators ||
+    // @ts-ignore
       !classDeclarationNode.decorators.length
     ) {
       return;
     }
 
-    const componentDecorator = classDeclarationNode.decorators.find((d) => {
+    // @ts-ignore
+    const componentDecorator = classDeclarationNode.decorators.find((d: { expression: ts.Node; }) => {
       return (
         ts.isCallExpression(d.expression) &&
         ts.isIdentifier(d.expression.expression) &&

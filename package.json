@@ -9,7 +9,7 @@
     "schema-slice": "npx -p dtsgenerator dtsgen src/slice/schema.json -o src/slice/schema.d.ts",
     "schema": "npm run schema-app && npm run schema-component && npm run schema-module && npm run schema-slice",
     "build": "tsc -p tsconfig.json",
-    "pack": "npm pack && mv angular-mat-baum-13.*.tgz angular-mat-baum-nightly.tgz"
+    "pack": "npm pack && mv angular-mat-baum-14.*.tgz angular-mat-baum-nightly.tgz"
   },
   "keywords": [
     "schematics",
@@ -20,17 +20,17 @@
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-devkit/core": "^13.1.1",
-    "@angular-devkit/schematics": "^13.1.1",
-    "@ngrx/schematics": "^13.0.2",
-    "@schematics/angular": "^13.1.1"
+    "@angular-devkit/core": "^14.2.13",
+    "@angular-devkit/schematics": "^14.2.13",
+    "@ngrx/schematics": "^14.3.3",
+    "@schematics/angular": "^14.2.13"
   },
   "devDependencies": {
-    "@angular-devkit/schematics-cli": "~13.1.1",
-    "@types/jasmine": "~3.10.0",
-    "@types/node": "^12.11.1",
-    "jasmine-core": "~3.10.0",
-    "typescript": "~4.5.2"
+    "@angular-devkit/schematics-cli": "~14.2.13",
+    "@types/jasmine": "~4.0.0",
+    "@types/node": "^18.18.9",
+    "jasmine-core": "~4.3.0",
+    "typescript": "~4.7.2"
   },
   "repository": {
     "type": "git",

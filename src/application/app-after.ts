@@ -26,11 +26,10 @@ export function factory(_options: App): Rule {
 		return chain([
 			externalSchematic('@angular/material', 'ng-add', {
 				project: name,
-				animations: true,
+				animations: 'enabled',
 				theme: 'custom',
 				typography: true
 			}),
-
 			externalSchematic('@schematics/angular', 'module', {
 				...getAngularSchematicsDefaults(_tree, name)['@schematics/angular:module'],
 				name: 'shared',
