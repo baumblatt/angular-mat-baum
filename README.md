@@ -42,6 +42,7 @@ ng g angular-mat-baum:component components/cadies-detail --type=bottom-sheet
 | 12.x    |   ~4.3.2   |  12.0.0-beta.19   |
 | 13.1.1  |   ~4.5.2   | 13.0.0-beta.20-23 |
 | 14.2.13 |   ~4.7.2   | 14.0.0-beta.24-25 |
+| 15.2.11 |   ~4.9.4   |  15.0.0-beta.26   |
 
 > Please, choose the Angular Baum version as compatibility table above.
 
