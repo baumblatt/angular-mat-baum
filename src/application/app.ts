@@ -30,6 +30,7 @@ export function factory(_options: App): Rule {
 				inlineTemplate: false
 			}),
 			externalSchematic('@schematics/angular', 'module', {
+				project: name,
 				name: 'core',
 				routing: true,
 				path: `projects/${name}/src/app`,
@@ -60,7 +61,7 @@ export function factory(_options: App): Rule {
 
 				debug(_options, 'Installing dependencies.');
 				const installTaskId = context.addTask(new NodePackageInstallTask({
-					packageName: '@angular/cdk@14.x @angular/material@14.x @angular/flex-layout@14.0.0-beta.41 @ngrx/store@14.x @ngrx/effects@14.x @ngrx/entity@14.x @ngrx/router-store@14.x @ngrx/store-devtools@14.x'
+					packageName: '@angular/cdk@15.x @angular/material@15.x @angular/flex-layout@15.0.0-beta.42 @ngrx/store@15.x @ngrx/effects@15.x @ngrx/entity@15.x @ngrx/router-store@15.x @ngrx/store-devtools@15.x'
 				}));
 				context.addTask(new RunSchematicTask('app-after', _options), [installTaskId]);
 			}

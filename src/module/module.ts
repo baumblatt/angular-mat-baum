@@ -185,10 +185,12 @@ export function factory(_options: Module): Rule {
       () => {
         debug(_options, 'Calling the entry component schematics.');
         _context.addTask(new RunSchematicTask('component', {
+          project: _options.project,
           name: 'entry',
           type: 'container',
           route: 'entry',
           path: `${_options.path}/${name}/containers`,
+          style: 'scss',
         }));
       }
     ]);

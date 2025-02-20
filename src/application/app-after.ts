@@ -32,12 +32,14 @@ export function factory(_options: App): Rule {
 			}),
 			externalSchematic('@schematics/angular', 'module', {
 				...getAngularSchematicsDefaults(_tree, name)['@schematics/angular:module'],
+				project: name,
 				name: 'shared',
 				module: 'core/core.module',
 				path: `projects/${name}/src/app`,
 			}),
 			externalSchematic('@schematics/angular', 'module', {
 				...getAngularSchematicsDefaults(_tree, name)['@schematics/angular:module'],
+				project: name,
 				name: 'material',
 				module: 'shared/shared.module',
 				path: `projects/${name}/src/app`,
@@ -127,7 +129,7 @@ export function factory(_options: App): Rule {
 				changes.push(...addImportToModule(
 					source,
 					`projects/${name}/src/app/app.module.ts`,
-					`StoreDevtoolsModule.instrument({name: '${name}', maxAge: 25, logOnly: environment.production})`,
+					`StoreDevtoolsModule.instrument({name: '${name}', maxAge: 25, logOnly: false})`,
 					'@ngrx/store-devtools'
 				));
 
@@ -143,13 +145,6 @@ export function factory(_options: App): Rule {
 					`projects/${name}/src/app/app.module.ts`,
 					'reducers, metaReducers',
 					'./store/reducers/global.reducers'
-				));
-
-				changes.push(insertImport(
-					source,
-					`projects/${name}/src/app/app.module.ts`,
-					'environment',
-					'../environments/environment'
 				));
 
 				return makeChanges(tree, `projects/${name}/src/app/app.module.ts`, changes);

@@ -144,10 +144,18 @@ export function factory(_options: Component): Rule {
             '@ngrx/store'
           ));
 
-          changes.push(replaceConstructor(
+          // angular component does not come with constructor anymore.
+          // changes.push(replaceConstructor(
+          //   source,
+          //   componentPath,
+          //   `(private store: Store<${classify(moduleName)}State>)`
+          // ));
+          //
+
+          changes.push(addMethod(
             source,
             componentPath,
-            `(private store: Store<${classify(moduleName)}State>)`
+            `  constructor (private store: Store<${classify(moduleName)}State>) {\n  }`
           ));
 
           return makeChanges(_tree, componentPath, changes);
@@ -178,14 +186,14 @@ export function factory(_options: Component): Rule {
             '@angular/core'
           ));
 
-          changes.push(replaceConstructor(
+          changes.push(addMethod(
             source,
             componentPath,
-            `(public dialogRef: MatDialogRef<${classify(name)}Dialog>, @Inject(MAT_DIALOG_DATA) public data: any)`
+            `  constructor(public dialogRef: MatDialogRef<${classify(name)}Dialog>, @Inject(MAT_DIALOG_DATA) public data: any) {\n  }`
           ));
 
           changes.push(addMethod(source, componentPath,
-            `  close(): void {\n    this.dialogRef.close();\n  }`
+            `\n\n  close(): void {\n    this.dialogRef.close();\n  }`
           ));
 
           return makeChanges(_tree, componentPath, changes);
@@ -216,14 +224,14 @@ export function factory(_options: Component): Rule {
             '@angular/core'
           ));
 
-          changes.push(replaceConstructor(
+          changes.push(addMethod(
             source,
             componentPath,
-            `(private bottomSheetRef: MatBottomSheetRef<${classify(name)}BottomSheet>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any)`
+            `  constructor (private bottomSheetRef: MatBottomSheetRef<${classify(name)}BottomSheet>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {\n  }`
           ));
 
           changes.push(addMethod(source, componentPath,
-            `  close(): void {\n    this.bottomSheetRef.dismiss();\n  }`
+            `\n\n  close(): void {\n    this.bottomSheetRef.dismiss();\n  }`
           ));
 
           return makeChanges(_tree, componentPath, changes);
